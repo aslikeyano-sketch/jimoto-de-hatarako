@@ -1,0 +1,205 @@
+// 地元で働こう（jimoto-de-hatarako）データ設計
+// 表＝地域接続メディア ／ 裏＝地域CRM（内部フィールドは公開しない：仕様§44）
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// 都道府県
+model Prefecture {
+  id        String  @id @default(cuid())
+  slug      String  @unique          // oita, tokyo ...
+  name      String                    // 大分県
+  region    String  @default("")      // 九州 など
+  catchcopy String  @default("")      // 大分で働く。大分と働く。
+  intro     String  @default("")      // 県紹介（Markdown）
+  published Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 企業（地元企業）
+model Company {
+  id           String  @id @default(cuid())
+  slug         String  @unique
+  status       String  @default("published") // draft/review/published/private
+  stage        String  @default("取材候補")   // 取材パイプライン(§46)
+  prefecture   String                          // 県slug
+  name         String
+  logo         String  @default("")
+  coverImage   String  @default("")
+  area         String  @default("")            // 市町村
+  url          String  @default("")
+  representative String @default("")
+  founded      String  @default("")
+  industry     String  @default("")            // 業種
+  employees    String  @default("")
+  // ── 公開情報（取材記事）──
+  description  String  @default("")            // 事業内容
+  history      String  @default("")            // 会社の歴史
+  strengths    String  @default("")            // 強み
+  localRelation String @default("")            // 地域との関係
+  futureChallenge String @default("")          // 今後の挑戦
+  wantedPerson String  @default("")            // 求める人物
+  messageToLocals String @default("")          // 東京の同郷者へ
+  photos       String  @default("")            // 画像URLカンマ区切り
+  // ── 内部CRM（非公開・仕様§14/§44）──
+  crmHiring    Boolean @default(false)         // 採用に困っている
+  crmDx        Boolean @default(false)         // AI/DX導入したい
+  crmSns       Boolean @default(false)         // SNSに課題
+  crmSalesCh   Boolean @default(false)         // 東京販路を広げたい
+  crmSales     Boolean @default(false)         // 営業に課題
+  crmNewBiz    Boolean @default(false)         // 新規事業を検討
+  crmSuccession Boolean @default(false)        // 事業承継予定
+  crmNotes     String  @default("")            // その他経営課題（非公開）
+  crmContact   String  @default("")            // 連絡先（非公開）
+  // ── 担当・出所（CRM）──
+  owner        String  @default("")            // 事業推進担当
+  organizer    String  @default("")            // 県人会主催者
+  introducedBy String  @default("")            // 紹介者
+  seoTitle     String  @default("")
+  seoDescription String @default("")
+  publishedAt  DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  @@index([prefecture, status])
+}
+
+// 人物（経営者・議員・自治体・農家・地域プレイヤー・若手・学生・クリエイター・Uターン）
+model Person {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  status      String  @default("published")
+  stage        String  @default("取材候補")  // 取材パイプライン(§46)
+  prefecture  String
+  name        String
+  category    String  @default("地域プレイヤー") // 経営者/議員/自治体/農家/地域プレイヤー/若手/学生/クリエイター/Uターン
+  title       String  @default("")               // 肩書
+  photo       String  @default("")
+  affiliation String  @default("")               // 所属・会社・団体
+  bio         String  @default("")               // プロフィール
+  story       String  @default("")               // 記事本文（Markdown）
+  message     String  @default("")               // 東京の同郷者へのメッセージ
+  // 議員・行政向け（地域の未来を聞く）
+  localIssue  String  @default("")               // 地域の課題認識
+  vision      String  @default("")               // 目指す社会
+  // 内部CRM
+  crmNotes    String  @default("")
+  crmContact  String  @default("")
+  owner       String  @default("")
+  introducedBy String @default("")
+  seoTitle    String  @default("")
+  seoDescription String @default("")
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@index([prefecture, category, status])
+}
+
+// 地方創生プロジェクト
+model Project {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  status      String  @default("published")
+  prefecture  String
+  title       String
+  coverImage  String  @default("")
+  theme       String  @default("")   // 農業/空き家/商店街/観光/事業承継 等
+  issue       String  @default("")   // 課題
+  summary     String  @default("")   // 概要
+  organizer   String  @default("")   // 主催者
+  current     String  @default("")   // 現在の活動
+  goal        String  @default("")   // 今後の目標
+  wantedHelp  String  @default("")   // 求めている協力
+  joinHow     String  @default("")   // 参加方法
+  seoTitle    String  @default("")
+  seoDescription String @default("")
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@index([prefecture, status])
+}
+
+// イベント
+model Event {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  status      String   @default("published")
+  prefecture  String
+  title       String
+  coverImage  String   @default("")
+  category    String   @default("")   // 県人会/自治体/東京事務所/大学/移住/就職 等
+  heldOn      DateTime?
+  place       String   @default("")
+  isOnline    Boolean  @default(false)
+  inTokyo     Boolean  @default(false) // 東京開催
+  host        String   @default("")
+  target      String   @default("")
+  content     String   @default("")
+  applyUrl    String   @default("")
+  seoTitle    String  @default("")
+  seoDescription String @default("")
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@index([prefecture, status])
+}
+
+// 団体（県人会・東京事務所・大学・学生団体・地域団体）
+model Organization {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  status      String  @default("published")
+  type        String  @default("学生団体") // 県人会/東京事務所/大学/学生団体/地域団体
+  prefecture  String
+  name        String
+  logo        String  @default("")
+  area        String  @default("")   // 活動地域
+  url         String  @default("")
+  representative String @default("")
+  members     String  @default("")   // メンバー数
+  purpose     String  @default("")   // 活動目的
+  activity    String  @default("")   // 活動内容
+  wantPartner String  @default("")   // 企業・自治体との連携希望
+  message     String  @default("")   // 地元への想い
+  seoTitle    String  @default("")
+  seoDescription String @default("")
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@index([prefecture, type, status])
+}
+
+// 地元と関わりたい人登録（仕様§27）
+model Registration {
+  id         String   @id @default(cuid())
+  name       String
+  age        String   @default("")
+  homePref   String   @default("")   // 出身県
+  homeCity   String   @default("")
+  currentLoc String   @default("")
+  job        String   @default("")
+  industry   String   @default("")
+  skills     String   @default("")
+  interests  String   @default("")   // 興味（カンマ区切り：Uターン/転職/副業...）
+  message    String   @default("")
+  handled    Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+// 取材・掲載希望／情報提供（仕様§28/§29）
+model Inquiry {
+  id         String   @id @default(cuid())
+  type       String   @default("取材掲載") // 取材掲載 / 情報提供
+  orgType    String   @default("")          // 企業/自治体/大学/学生団体/議員 等
+  name       String                          // 会社/団体/氏名
+  prefecture String   @default("")
+  contact    String   @default("")          // メール/電話
+  message    String   @default("")
+  handled    Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
