@@ -4,8 +4,8 @@ import { SITE, NAV } from "@/lib/constants";
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-slate-100 bg-white/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
-        <Link href="/" className="flex items-center gap-2">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-5 py-3">
+        <Link href="/" className="flex shrink-0 items-center gap-2">
           <span className="flex h-9 w-9 items-center justify-center rounded-xl brand-gradient text-lg font-bold text-white">地</span>
           <span className="flex flex-col leading-none">
             <span className="whitespace-nowrap text-lg font-bold tracking-tight text-slate-900">{SITE.name}</span>
