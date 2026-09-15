@@ -51,7 +51,7 @@ export default async function Home() {
           {/* 中央：日本地図 */}
           <div className="lg:col-span-5">
             <div className="relative">
-              <p className="brush pointer-events-none absolute right-2 top-0 z-10 text-sm font-semibold text-brand-600/90 md:text-base">ローカルのチカラが、<br />日本を動かす。</p>
+              <p className="brush pointer-events-none absolute left-1 top-2 z-10 text-sm font-semibold leading-relaxed text-brand-600/90 md:text-base">ローカルのチカラが、<br />日本を動かす。</p>
               <JapanMap counts={counts} />
               <Link href="/prefectures" className="mx-auto mt-1 flex w-fit flex-col items-center text-xs font-semibold text-brand-600 hover:text-brand-700">
                 地域からインタビューを探す
