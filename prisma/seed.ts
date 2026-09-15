@@ -132,13 +132,13 @@ const orgs = [
 const CATS = ["地元企業・経営者","地域プロジェクト","若者・学生","Uターン・移住者","自治体・行政","地域プレイヤー","東京から地元に関わる人"];
 const prefName: Record<string,string> = Object.fromEntries(PREFECTURES_MASTER.map(p=>[p.slug,p.name]));
 
-type ISeed = { pref:string; company:string; person:string; role:string; cat:string; title:string; sub:string; tags:string; slug?:string };
+type ISeed = { pref:string; company:string; person:string; role:string; cat:string; title:string; sub:string; tags:string; slug?:string; img?:string };
 // 各県ごとの見出しプール（取材件数で地図の色を段階化）
 const HERO: Record<string, ISeed[]> = {
   niigata:[{pref:"niigata",company:"雪國酒造",person:"佐藤 誠",role:"代表取締役",cat:"地元企業・経営者",title:"雪国の酒を、世界へ。地域と生きる酒蔵の挑戦",sub:"米と水と人。土地の力を醸すものづくり",tags:"地元企業,経営者,事業承継"}],
-  kochi:[{pref:"kochi",company:"土佐グリーンファーム",person:"山本 彩",role:"農業経営者",cat:"地域プロジェクト",title:"畑から、まちの未来をつくる。若き農業経営者のチャレンジ",sub:"耕作放棄地を、次の世代の希望に変える",tags:"地元企業,地域プロジェクト,農業"}],
-  ishikawa:[{pref:"ishikawa",company:"能登ものづくり工房",person:"中村 拓也",role:"職人・代表",cat:"地元企業・経営者",title:"能登の手仕事を、次の世代へ。ものづくりでつなぐ地域の輪",sub:"伝統と革新のあいだで",tags:"地元企業,まちづくり,事業承継"}],
-  nagasaki:[{pref:"nagasaki",company:"五島うみのめぐみ",person:"林 早紀",role:"漁業法人 代表",cat:"地域プロジェクト",title:"離島だからこそできること。海と生きる、持続可能な漁業を",sub:"島の暮らしを次世代へつなぐ",tags:"地域プロジェクト,経営者,まちづくり"}],
+  kochi:[{pref:"kochi",company:"土佐グリーンファーム",person:"山本 彩",role:"農業経営者",cat:"地域プロジェクト",title:"畑から、まちの未来をつくる。若き農業経営者のチャレンジ",sub:"耕作放棄地を、次の世代の希望に変える",tags:"地元企業,地域プロジェクト,農業",img:"/images/interviews/kochi-farm.png"}],
+  ishikawa:[{pref:"ishikawa",company:"能登ものづくり工房",person:"中村 拓也",role:"職人・代表",cat:"地元企業・経営者",title:"能登の手仕事を、次の世代へ。ものづくりでつなぐ地域の輪",sub:"伝統と革新のあいだで",tags:"地元企業,まちづくり,事業承継",img:"/images/interviews/ishikawa-monozukuri.png"}],
+  nagasaki:[{pref:"nagasaki",company:"五島うみのめぐみ",person:"林 早紀",role:"漁業法人 代表",cat:"地域プロジェクト",title:"離島だからこそできること。海と生きる、持続可能な漁業を",sub:"島の暮らしを次世代へつなぐ",tags:"地域プロジェクト,経営者,まちづくり",img:"/images/interviews/nagasaki-umi.png"}],
   hokkaido:[{pref:"hokkaido",company:"MACHI base",person:"高橋 一真",role:"コミュニティ運営",cat:"地元企業・経営者",title:"人が集う、まちのあたらしい拠点。ローカルから生まれる豊かな暮らし",sub:"小さな町で、大きな実験を",tags:"地元企業,Uターン,まちづくり"}],
 };
 function makeInterviews(): ISeed[] {
@@ -217,7 +217,7 @@ async function main() {
     const d:any = {
       slug, status:"published", prefecture:s.pref, city:"",
       companyName:s.company, personName:s.person, personRole:s.role,
-      category:s.cat, tags:s.tags, title:s.title, subtitle:s.sub, mainImage:"",
+      category:s.cat, tags:s.tags, title:s.title, subtitle:s.sub, mainImage:s.img ?? "",
       ...body(s),
       topPick: idx <= 5, recommend: idx <= 8, featured: idx % 5 === 0,
       seoTitle:`${s.title}｜${prefName[s.pref]}のインタビュー｜地元で働こう`,
