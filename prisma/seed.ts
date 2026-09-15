@@ -209,6 +209,14 @@ async function main() {
     more = false;
     for (const q of queues) { const x = q.shift(); if (x) { interviews.push(x); more = true; } }
   }
+  // 特定スラッグへの写真割り当て（最新5記事など）
+  const IMG_OVERRIDE: Record<string,string> = {
+    "oita-iv-001": "/images/interviews/keiei-factory-1.png",
+    "miyazaki-iv-001": "/images/interviews/keiei-factory-2.png",
+    "hokkaido-iv-001": "/images/interviews/craftsman-wood.png",
+    "fukuoka-iv-001": "/images/interviews/logistics.png",
+    "tokyo-iv-001": "/images/interviews/care-exec.png",
+  };
   let idx = 0;
   for (const s of interviews) {
     const slug = s.slug!;
@@ -217,7 +225,7 @@ async function main() {
     const d:any = {
       slug, status:"published", prefecture:s.pref, city:"",
       companyName:s.company, personName:s.person, personRole:s.role,
-      category:s.cat, tags:s.tags, title:s.title, subtitle:s.sub, mainImage:s.img ?? "",
+      category:s.cat, tags:s.tags, title:s.title, subtitle:s.sub, mainImage:s.img ?? IMG_OVERRIDE[slug] ?? "",
       ...body(s),
       topPick: idx <= 5, recommend: idx <= 8, featured: idx % 5 === 0,
       seoTitle:`${s.title}｜${prefName[s.pref]}のインタビュー｜地元で働こう`,

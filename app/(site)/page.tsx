@@ -5,6 +5,8 @@ import { PREFECTURES_MASTER, REGIONS } from "@/lib/prefectures-master";
 import { JapanMap } from "@/components/japan-map";
 import { SearchBar } from "@/components/search-bar";
 import { InterviewCard } from "@/components/interview-card";
+import { HeroPhotos } from "@/components/hero-photos";
+import { Reveal } from "@/components/reveal";
 
 export const dynamic = "force-dynamic";
 
@@ -26,8 +28,8 @@ export default async function Home() {
         <div className="mx-auto grid max-w-[1440px] items-center gap-6 px-5 py-8 md:py-10 lg:grid-cols-12 lg:gap-8">
           {/* 左：メッセージ＋検索 */}
           <div className="lg:col-span-4">
-            <p className="brush text-sm font-semibold text-brand-600">{SITE.catch}</p>
-            <h1 className="mt-3 text-[2.1rem] font-bold leading-[1.2] tracking-tight text-navy-900 md:text-[2.6rem]">
+            <p className="fade-up d1 brush text-sm font-semibold text-brand-600">{SITE.catch}</p>
+            <h1 className="fade-up d2 mt-3 text-[2.1rem] font-bold leading-[1.2] tracking-tight text-navy-900 md:text-[2.6rem]">
               <span className="text-brand-600">{SITE.heroLead}</span>{SITE.heroTitleA}
               <br />
               <span className="relative inline-block">
@@ -36,9 +38,9 @@ export default async function Home() {
               </span>
               {SITE.heroTitleC}
             </h1>
-            <p className="mt-5 text-sm leading-relaxed text-slate-600">{SITE.lead}</p>
-            <div className="mt-6"><SearchBar /></div>
-            <div className="mt-4">
+            <p className="fade-up d3 mt-5 text-sm leading-relaxed text-slate-600">{SITE.lead}</p>
+            <div className="fade-up d4 mt-6"><SearchBar /></div>
+            <div className="fade-up d5 mt-4">
               <p className="text-xs font-semibold text-slate-400">人気のキーワード</p>
               <div className="mt-2 flex flex-wrap gap-2">
                 {POPULAR_KEYWORDS.map((k) => (
@@ -49,33 +51,29 @@ export default async function Home() {
           </div>
 
           {/* 中央：日本地図（タブレット以下では大きくなりすぎないよう幅を抑える） */}
-          <div className="lg:col-span-5">
+          <div className="fade-up d3 lg:col-span-5">
             <div className="relative mx-auto w-full max-w-[440px] lg:max-w-none">
               <p className="brush pointer-events-none absolute left-1 top-2 z-10 text-sm font-semibold leading-relaxed text-brand-600/90 md:text-base">ローカルのチカラが、<br />日本を動かす。</p>
               <JapanMap counts={counts} />
               <Link href="/prefectures" className="mx-auto mt-1 flex w-fit flex-col items-center text-xs font-semibold text-brand-600 hover:text-brand-700">
                 地域からインタビューを探す
-                <span className="mt-1 flex h-7 w-7 items-center justify-center rounded-full border border-brand-200 bg-white">↓</span>
+                <span className="arrow-bob mt-1 flex h-7 w-7 items-center justify-center rounded-full border border-brand-200 bg-white">↓</span>
               </Link>
             </div>
           </div>
 
           {/* 右：地域の写真＋コピー */}
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:col-span-3 lg:grid-cols-1">
-            <PhotoTile img="/images/hero/make.png" copy="このまちで、つくる。つなぐ。" />
-            <PhotoTile img="/images/hero/local-work.png" copy="ローカルだからこそ、できる仕事がある。" />
-            <PhotoTile img="/images/hero/discover.png" copy="知らなかった日本に、会いにいこう。" />
-          </div>
+          <HeroPhotos />
         </div>
       </section>
 
       {/* 最新のインタビュー */}
-      <section className="mx-auto max-w-[1440px] px-5 py-12">
+      <section id="latest" className="mx-auto max-w-[1440px] scroll-mt-20 px-5 py-12">
         <SectionHead title="最新のインタビュー" sub="いま、注目したい。全国の地元企業と、そこで生きる人たちのストーリー。" more="/interviews" moreLabel="インタビュー一覧を見る" />
         {latest.length ? (
-          <div className="no-scrollbar -mx-5 flex gap-4 overflow-x-auto px-5 pb-2 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 lg:grid-cols-5">
-            {latest.map((iv) => <div key={iv.id} className="w-[78%] shrink-0 sm:w-[45%] md:w-auto"><InterviewCard iv={iv} /></div>)}
-          </div>
+          <Reveal className="no-scrollbar -mx-5 flex gap-4 overflow-x-auto px-5 pb-2 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 lg:grid-cols-5">
+            {latest.map((iv) => <div key={iv.id} className="reveal-item w-[78%] shrink-0 sm:w-[45%] md:w-auto"><InterviewCard iv={iv} /></div>)}
+          </Reveal>
         ) : <Empty />}
       </section>
 
@@ -163,17 +161,6 @@ export default async function Home() {
         </div>
       </section>
     </main>
-  );
-}
-
-function PhotoTile({ img, copy }: { img: string; copy: string }) {
-  return (
-    <div className="group relative flex aspect-[16/10] items-end overflow-hidden rounded-2xl shadow-card sm:aspect-[4/3] lg:aspect-auto lg:min-h-[168px] lg:flex-1">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={img} alt={copy} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-      <div className="absolute inset-0 bg-gradient-to-t from-navy-900/75 via-navy-900/15 to-transparent" />
-      <span className="brush relative z-10 p-4 text-base font-bold leading-snug text-white drop-shadow-md">{copy}</span>
-    </div>
   );
 }
 
