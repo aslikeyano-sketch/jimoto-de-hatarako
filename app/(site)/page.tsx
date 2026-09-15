@@ -62,9 +62,9 @@ export default async function Home() {
 
           {/* 右：地域の写真＋コピー */}
           <div className="grid gap-3 lg:col-span-3">
-            <PhotoTile grad="from-sky2-200 to-brand-100" emoji="⛰️" copy="このまちで、つくる。つなぐ。" />
-            <PhotoTile grad="from-brand-100 to-sky2-100" emoji="🧑‍🍳" copy="ローカルだからこそ、できる仕事がある。" />
-            <PhotoTile grad="from-emerald-100 to-sky2-200" emoji="🌊" copy="知らなかった日本に、会いにいこう。" />
+            <PhotoTile img="/images/hero/make.png" copy="このまちで、つくる。つなぐ。" />
+            <PhotoTile img="/images/hero/local-work.png" copy="ローカルだからこそ、できる仕事がある。" />
+            <PhotoTile img="/images/hero/discover.png" copy="知らなかった日本に、会いにいこう。" />
           </div>
         </div>
       </section>
@@ -166,11 +166,13 @@ export default async function Home() {
   );
 }
 
-function PhotoTile({ grad, emoji, copy }: { grad: string; emoji: string; copy: string }) {
+function PhotoTile({ img, copy }: { img: string; copy: string }) {
   return (
-    <div className={`relative flex aspect-[3/2] items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br ${grad} shadow-card lg:aspect-auto lg:min-h-[92px]`}>
-      <span className="text-4xl opacity-70">{emoji}</span>
-      <span className="brush absolute bottom-2 right-3 text-right text-xs font-semibold text-navy-800/90">{copy}</span>
+    <div className="group relative flex aspect-[16/9] items-end overflow-hidden rounded-2xl shadow-card lg:aspect-auto lg:min-h-[104px] lg:flex-1">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={img} alt={copy} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+      <div className="absolute inset-0 bg-gradient-to-t from-navy-900/70 via-navy-900/10 to-transparent" />
+      <span className="brush relative z-10 p-3 text-sm font-bold leading-snug text-white drop-shadow-sm">{copy}</span>
     </div>
   );
 }
