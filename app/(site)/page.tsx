@@ -23,7 +23,7 @@ export default async function Home() {
     <main>
       {/* ファーストビュー */}
       <section className="hero-bg border-b border-slate-100">
-        <div className="mx-auto grid max-w-[1440px] items-center gap-8 px-5 py-12 md:py-16 lg:grid-cols-12">
+        <div className="mx-auto grid max-w-[1440px] items-center gap-6 px-5 py-8 md:py-10 lg:grid-cols-12 lg:gap-8">
           {/* 左：メッセージ＋検索 */}
           <div className="lg:col-span-4">
             <p className="brush text-sm font-semibold text-brand-600">{SITE.catch}</p>
@@ -48,9 +48,9 @@ export default async function Home() {
             </div>
           </div>
 
-          {/* 中央：日本地図 */}
+          {/* 中央：日本地図（タブレット以下では大きくなりすぎないよう幅を抑える） */}
           <div className="lg:col-span-5">
-            <div className="relative">
+            <div className="relative mx-auto w-full max-w-[440px] lg:max-w-none">
               <p className="brush pointer-events-none absolute left-1 top-2 z-10 text-sm font-semibold leading-relaxed text-brand-600/90 md:text-base">ローカルのチカラが、<br />日本を動かす。</p>
               <JapanMap counts={counts} />
               <Link href="/prefectures" className="mx-auto mt-1 flex w-fit flex-col items-center text-xs font-semibold text-brand-600 hover:text-brand-700">
@@ -61,7 +61,7 @@ export default async function Home() {
           </div>
 
           {/* 右：地域の写真＋コピー */}
-          <div className="grid gap-3 lg:col-span-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:col-span-3 lg:grid-cols-1">
             <PhotoTile img="/images/hero/make.png" copy="このまちで、つくる。つなぐ。" />
             <PhotoTile img="/images/hero/local-work.png" copy="ローカルだからこそ、できる仕事がある。" />
             <PhotoTile img="/images/hero/discover.png" copy="知らなかった日本に、会いにいこう。" />
@@ -168,11 +168,11 @@ export default async function Home() {
 
 function PhotoTile({ img, copy }: { img: string; copy: string }) {
   return (
-    <div className="group relative flex aspect-[16/9] items-end overflow-hidden rounded-2xl shadow-card lg:aspect-auto lg:min-h-[104px] lg:flex-1">
+    <div className="group relative flex aspect-[16/10] items-end overflow-hidden rounded-2xl shadow-card sm:aspect-[4/3] lg:aspect-auto lg:min-h-[168px] lg:flex-1">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={img} alt={copy} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-      <div className="absolute inset-0 bg-gradient-to-t from-navy-900/70 via-navy-900/10 to-transparent" />
-      <span className="brush relative z-10 p-3 text-sm font-bold leading-snug text-white drop-shadow-sm">{copy}</span>
+      <div className="absolute inset-0 bg-gradient-to-t from-navy-900/75 via-navy-900/15 to-transparent" />
+      <span className="brush relative z-10 p-4 text-base font-bold leading-snug text-white drop-shadow-md">{copy}</span>
     </div>
   );
 }
