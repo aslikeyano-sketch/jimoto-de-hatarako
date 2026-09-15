@@ -41,7 +41,7 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
   return (
     <main>
       <PageHero eyebrow="SEARCH" title="検索" lead="都道府県・企業名・人物名・役職・タイトル・本文・タグ・カテゴリーから横断検索。" />
-      <div className="mx-auto max-w-6xl px-5 py-10">
+      <div className="mx-auto max-w-[1440px] px-5 py-10">
         <div className="mx-auto max-w-2xl"><SearchBar defaultValue={q} /></div>
 
         {/* カテゴリー絞り込み */}

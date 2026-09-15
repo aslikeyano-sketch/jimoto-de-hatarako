@@ -10,7 +10,7 @@ export default async function Orgs() {
   return (
     <main>
       <PageHero eyebrow="ORGANIZATIONS" title="県人会・東京事務所・大学・学生団体" lead="東京で地元とつながる拠点と、地域を動かす団体たち。" />
-      <div className="mx-auto max-w-6xl px-5 py-10 space-y-10">
+      <div className="mx-auto max-w-[1440px] px-5 py-10 space-y-10">
         <Crumbs items={[{href:"/",label:"ホーム"},{label:"団体・つながり"}]} />
         {ORG_TYPES.map(t=>{
           const g=rows.filter(o=>o.type===t); if(!g.length) return null;

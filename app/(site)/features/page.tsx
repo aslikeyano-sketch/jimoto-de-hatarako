@@ -10,7 +10,7 @@ export default async function FeaturesPage() {
   return (
     <main>
       <PageHero eyebrow="FEATURE" title="特集" lead="地方×若者、地方×AI、Uターン経営者——テーマで読み解く、地域とこれからの仕事。" />
-      <div className="mx-auto max-w-6xl px-5 py-10">
+      <div className="mx-auto max-w-[1440px] px-5 py-10">
         {features.length ? (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {features.map((f) => (

@@ -22,7 +22,7 @@ export default async function InterviewsPage({ searchParams }: { searchParams: {
   return (
     <main>
       <PageHero eyebrow="INTERVIEW" title="インタビュー" lead="全国各地で挑戦する地元企業と、そこで生きる人たちのストーリー。" />
-      <div className="mx-auto max-w-6xl px-5 py-10">
+      <div className="mx-auto max-w-[1440px] px-5 py-10">
         {/* カテゴリーフィルタ */}
         <div className="mb-8 flex flex-wrap gap-2">
           <Link href="/interviews" className={`rounded-full px-3 py-1.5 text-xs font-semibold ${!category ? "bg-brand-600 text-white" : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50"}`}>すべて</Link>

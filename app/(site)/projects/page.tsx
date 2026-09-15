@@ -9,7 +9,7 @@ export default async function Projects() {
   return (
     <main>
       <PageHero eyebrow="PROJECTS" title="地元の活動を知る" lead="地域で始まっている挑戦。あなたも「参加する」から関われます。" />
-      <div className="mx-auto max-w-6xl px-5 py-10">
+      <div className="mx-auto max-w-[1440px] px-5 py-10">
         <Crumbs items={[{href:"/",label:"ホーム"},{label:"地元の活動を知る"}]} />
         {rows.length ? <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{rows.map(p=><ProjectCard key={p.id} p={p} />)}</div>
           : <p className="rounded-xl border border-dashed border-slate-200 p-10 text-center text-slate-400">準備中です</p>}

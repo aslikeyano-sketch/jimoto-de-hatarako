@@ -45,7 +45,7 @@ export default async function FeatureDetail({ params }: { params: { slug: string
       </article>
       {related.length > 0 && (
         <section className="bg-slate-50/70 py-12">
-          <div className="mx-auto max-w-6xl px-5">
+          <div className="mx-auto max-w-[1440px] px-5">
             <h2 className="mb-5 text-xl font-bold text-navy-900">この特集の記事</h2>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{related.map((iv) => <InterviewCard key={iv.id} iv={iv} />)}</div>
           </div>

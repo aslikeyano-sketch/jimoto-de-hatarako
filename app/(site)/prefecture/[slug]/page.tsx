@@ -36,7 +36,7 @@ export default async function PrefPage({ params }: { params: { slug: string } })
   return (
     <main>
       <section className="hero-bg border-b border-slate-100">
-        <div className="mx-auto max-w-6xl px-5 py-12">
+        <div className="mx-auto max-w-[1440px] px-5 py-12">
           <Crumbs items={[{ href: "/", label: "ホーム" }, { href: "/prefectures", label: "地域から探す" }, { label: pref.name }]} />
           <p className="brush text-sm font-semibold text-brand-600">{master?.region}</p>
           <h1 className="mt-1 text-3xl font-bold tracking-tight text-navy-900 md:text-5xl">{pref.name}</h1>
@@ -51,7 +51,7 @@ export default async function PrefPage({ params }: { params: { slug: string } })
         </div>
       </section>
 
-      <div className="mx-auto max-w-6xl space-y-14 px-5 py-12">
+      <div className="mx-auto max-w-[1440px] space-y-14 px-5 py-12">
         {/* 最新インタビュー */}
         <Block title="インタビュー" empty="この地域はまだ準備中です。取材候補を募集しています。">
           {interviews.length > 0 && <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{interviews.map((iv) => <InterviewCard key={iv.id} iv={iv} />)}</div>}

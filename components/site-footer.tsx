@@ -4,7 +4,7 @@ import { SITE } from "@/lib/constants";
 export function SiteFooter() {
   return (
     <footer className="mt-16 border-t border-slate-100 bg-navy-900 text-slate-300">
-      <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 md:grid-cols-4">
+      <div className="mx-auto grid max-w-[1440px] gap-8 px-5 py-12 md:grid-cols-4">
         <div className="md:col-span-2">
           <p className="text-base font-bold text-white">{SITE.catch}</p>
           <p className="mt-1 text-xs text-slate-400">{SITE.sub}</p>
@@ -33,7 +33,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-white/10 px-5 py-4">
-        <div className="mx-auto flex max-w-6xl flex-wrap justify-center gap-x-5 gap-y-2 text-xs text-slate-400">
+        <div className="mx-auto flex max-w-[1440px] flex-wrap justify-center gap-x-5 gap-y-2 text-xs text-slate-400">
           <Link href="/company" className="hover:text-white">運営会社</Link>
           <Link href="/editorial-policy" className="hover:text-white">編集・取材方針</Link>
           <Link href="/privacy" className="hover:text-white">プライバシーポリシー</Link>

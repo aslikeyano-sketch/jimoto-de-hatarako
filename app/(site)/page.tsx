@@ -23,7 +23,7 @@ export default async function Home() {
     <main>
       {/* ファーストビュー */}
       <section className="hero-bg border-b border-slate-100">
-        <div className="mx-auto grid max-w-6xl items-center gap-8 px-5 py-12 md:py-16 lg:grid-cols-12">
+        <div className="mx-auto grid max-w-[1440px] items-center gap-8 px-5 py-12 md:py-16 lg:grid-cols-12">
           {/* 左：メッセージ＋検索 */}
           <div className="lg:col-span-4">
             <p className="brush text-sm font-semibold text-brand-600">{SITE.catch}</p>
@@ -70,7 +70,7 @@ export default async function Home() {
       </section>
 
       {/* 最新のインタビュー */}
-      <section className="mx-auto max-w-6xl px-5 py-12">
+      <section className="mx-auto max-w-[1440px] px-5 py-12">
         <SectionHead title="最新のインタビュー" sub="いま、注目したい。全国の地元企業と、そこで生きる人たちのストーリー。" more="/interviews" moreLabel="インタビュー一覧を見る" />
         {latest.length ? (
           <div className="no-scrollbar -mx-5 flex gap-4 overflow-x-auto px-5 pb-2 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 lg:grid-cols-5">
@@ -81,7 +81,7 @@ export default async function Home() {
 
       {/* 地域から探す（地方区分＋件数） */}
       <section className="bg-slate-50/70 py-12">
-        <div className="mx-auto max-w-6xl px-5">
+        <div className="mx-auto max-w-[1440px] px-5">
           <SectionHead title="地域から探す" sub={`全国 ${activePrefs} 県で取材中／累計 ${total} 本のインタビュー`} more="/prefectures" moreLabel="日本地図から探す" />
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {REGIONS.map((region) => {
@@ -111,7 +111,7 @@ export default async function Home() {
 
       {/* 特集 */}
       {features.length > 0 && (
-        <section className="mx-auto max-w-6xl px-5 py-12">
+        <section className="mx-auto max-w-[1440px] px-5 py-12">
           <SectionHead title="特集" sub="テーマで読み解く、地域とこれからの仕事。" more="/features" moreLabel="特集一覧" />
           <div className="grid gap-5 md:grid-cols-3">
             {features.map((f) => (
@@ -132,7 +132,7 @@ export default async function Home() {
 
       {/* 人・企業から探す（カテゴリー） */}
       <section className="bg-slate-50/70 py-12">
-        <div className="mx-auto max-w-6xl px-5">
+        <div className="mx-auto max-w-[1440px] px-5">
           <SectionHead title="人・企業から探す" sub="立場や関わり方から、インタビューを見つける。" />
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             {INTERVIEW_CATEGORIES.map((c) => (
@@ -145,7 +145,7 @@ export default async function Home() {
       </section>
 
       {/* CTA */}
-      <section className="mx-auto max-w-6xl px-5 py-14">
+      <section className="mx-auto max-w-[1440px] px-5 py-14">
         <div className="grid gap-4 md:grid-cols-2">
           <div className="rounded-3xl brand-gradient px-7 py-10 text-white">
             <h3 className="text-xl font-bold">地域の企業を応援したい方へ</h3>

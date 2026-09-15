@@ -13,7 +13,7 @@ export default async function People({ searchParams }:{ searchParams:{cat?:strin
   return (
     <main>
       <PageHero eyebrow="PEOPLE" title="地元の人を知る" lead="地元を動かしている経営者・議員・地域プレイヤー・若者たち。" />
-      <div className="mx-auto max-w-6xl px-5 py-10">
+      <div className="mx-auto max-w-[1440px] px-5 py-10">
         <Crumbs items={[{href:"/",label:"ホーム"},{label:"地元の人を知る"}]} />
         <div className="mb-6 flex flex-wrap gap-2">
           <Link href="/people" className={`rounded-full px-4 py-1.5 text-sm font-semibold ${!cat?"brand-gradient text-white":"border border-slate-200 text-slate-600 hover:bg-slate-50"}`}>すべて</Link>

@@ -137,7 +137,7 @@ export default async function InterviewDetail({ params }: { params: { slug: stri
       {/* 関連記事 */}
       {(samePref.length > 0 || sameCat.length > 0) && (
         <section className="bg-slate-50/70 py-12">
-          <div className="mx-auto max-w-6xl px-5">
+          <div className="mx-auto max-w-[1440px] px-5">
             {samePref.length > 0 && (
               <>
                 <h2 className="mb-5 text-xl font-bold text-navy-900">同じ{pref?.name ?? "地域"}の記事</h2>

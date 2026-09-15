@@ -15,7 +15,7 @@ export default async function Prefectures() {
   return (
     <main>
       <PageHero eyebrow="地域から探す" title="日本地図から、地元を選ぶ。" lead="47都道府県のどこかに、あなたの知らない面白い会社と人がいます。地図をクリックして、その地域のインタビューへ。" />
-      <div className="mx-auto max-w-6xl space-y-12 px-5 py-10">
+      <div className="mx-auto max-w-[1440px] space-y-12 px-5 py-10">
         <Crumbs items={[{ href: "/", label: "ホーム" }, { label: "地域から探す" }]} />
 
         <div className="mx-auto max-w-2xl">

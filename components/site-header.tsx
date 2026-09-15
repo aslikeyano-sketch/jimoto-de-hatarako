@@ -11,7 +11,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-100 bg-white/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3">
+      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-5 py-3">
         <Link href="/" className="flex shrink-0 flex-col leading-none">
           <span className="whitespace-nowrap text-lg font-bold tracking-tight text-navy-900">{SITE.catch}</span>
           <span className="mt-1 whitespace-nowrap text-[10px] tracking-wide text-slate-400">{SITE.sub}｜by Roots Next</span>
@@ -42,7 +42,7 @@ export function SiteHeader() {
 
       {open && (
         <div className="border-t border-slate-100 bg-white lg:hidden">
-          <nav className="mx-auto flex max-w-6xl flex-col px-5 py-2">
+          <nav className="mx-auto flex max-w-[1440px] flex-col px-5 py-2">
             {NAV.map((n) => (
               <Link key={n.href} href={n.href} onClick={() => setOpen(false)} className="border-b border-slate-50 py-3 text-sm font-medium text-slate-700">
                 {n.label}

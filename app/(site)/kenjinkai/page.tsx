@@ -14,7 +14,7 @@ export default async function KenjinkaiPage() {
   return (
     <main>
       <PageHero eyebrow="県人会ネットワーク" title="県人会" lead="東京にいても、地元とつながり続ける。Roots Nextは全国の県人会と連携し、同郷のつながりを地元への貢献につなげます。" />
-      <div className="mx-auto max-w-6xl px-5 py-10">
+      <div className="mx-auto max-w-[1440px] px-5 py-10">
         {orgs.length ? (
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {orgs.map((o) => {
