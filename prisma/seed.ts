@@ -1,12 +1,17 @@
 import { PrismaClient } from "@prisma/client";
+import { PREFECTURES_MASTER } from "../lib/prefectures-master";
 const prisma = new PrismaClient();
 
-const prefectures = [
-  { slug: "oita", name: "大分県", region: "九州", catchcopy: "大分で働く。大分と働く。", intro: "温泉と自然、ものづくりと挑戦する人が集まる大分。東京にいるあなたと、大分の企業・人・地域活動をつなぎます。", published: true },
-  { slug: "miyazaki", name: "宮崎県", region: "九州", catchcopy: "宮崎で働く。宮崎と働く。", intro: "", published: true },
-  { slug: "kagoshima", name: "鹿児島県", region: "九州", catchcopy: "鹿児島で働く。鹿児島と働く。", intro: "", published: true },
-  { slug: "wakayama", name: "和歌山県", region: "近畿", catchcopy: "和歌山で働く。和歌山と働く。", intro: "", published: true },
-];
+// 47都道府県を全件登録（地図・県ページ用）。大分は詳細コピーを上書き。
+const prefIntro: Record<string, { catchcopy: string; intro: string }> = {
+  oita: { catchcopy: "大分を面白くしている企業と人たち。", intro: "温泉と自然、ものづくりと挑戦する人が集まる大分。東京にいるあなたと、大分の企業・人・地域活動をつなぎます。" },
+};
+const prefectures = PREFECTURES_MASTER.map((p) => ({
+  slug: p.slug, name: p.name, region: p.region,
+  catchcopy: prefIntro[p.slug]?.catchcopy ?? `${p.name}を面白くしている企業と人たち。`,
+  intro: prefIntro[p.slug]?.intro ?? "",
+  published: true,
+}));
 
 const companies = [
   {
@@ -123,6 +128,67 @@ const orgs = [
   },
 ];
 
+// ── インタビュー記事（サンプル）──────────────────────────
+const CATS = ["地元企業・経営者","地域プロジェクト","若者・学生","Uターン・移住者","自治体・行政","地域プレイヤー","東京から地元に関わる人"];
+const prefName: Record<string,string> = Object.fromEntries(PREFECTURES_MASTER.map(p=>[p.slug,p.name]));
+
+type ISeed = { pref:string; company:string; person:string; role:string; cat:string; title:string; sub:string; tags:string; slug?:string };
+// 各県ごとの見出しプール（取材件数で地図の色を段階化）
+const HERO: Record<string, ISeed[]> = {
+  niigata:[{pref:"niigata",company:"雪國酒造",person:"佐藤 誠",role:"代表取締役",cat:"地元企業・経営者",title:"雪国の酒を、世界へ。地域と生きる酒蔵の挑戦",sub:"米と水と人。土地の力を醸すものづくり",tags:"地元企業,経営者,事業承継"}],
+  kochi:[{pref:"kochi",company:"土佐グリーンファーム",person:"山本 彩",role:"農業経営者",cat:"地域プロジェクト",title:"畑から、まちの未来をつくる。若き農業経営者のチャレンジ",sub:"耕作放棄地を、次の世代の希望に変える",tags:"地元企業,地域プロジェクト,農業"}],
+  ishikawa:[{pref:"ishikawa",company:"能登ものづくり工房",person:"中村 拓也",role:"職人・代表",cat:"地元企業・経営者",title:"能登の手仕事を、次の世代へ。ものづくりでつなぐ地域の輪",sub:"伝統と革新のあいだで",tags:"地元企業,まちづくり,事業承継"}],
+  nagasaki:[{pref:"nagasaki",company:"五島うみのめぐみ",person:"林 早紀",role:"漁業法人 代表",cat:"地域プロジェクト",title:"離島だからこそできること。海と生きる、持続可能な漁業を",sub:"島の暮らしを次世代へつなぐ",tags:"地域プロジェクト,経営者,まちづくり"}],
+  hokkaido:[{pref:"hokkaido",company:"MACHI base",person:"高橋 一真",role:"コミュニティ運営",cat:"地元企業・経営者",title:"人が集う、まちのあたらしい拠点。ローカルから生まれる豊かな暮らし",sub:"小さな町で、大きな実験を",tags:"地元企業,Uターン,まちづくり"}],
+};
+function makeInterviews(): ISeed[] {
+  const out: ISeed[] = [];
+  // 件数配分（地図の段階を作る）
+  const plan: Record<string, number> = {
+    oita:12, miyazaki:8, hokkaido:6, fukuoka:5, tokyo:5, kagawa:4,
+    niigata:3, kochi:3, ishikawa:2, nagasaki:2, ehime:1, kagoshima:1,
+  };
+  for (const [pref, n] of Object.entries(plan)) {
+    const heroes = HERO[pref] ?? [];
+    for (let i=0;i<n;i++){
+      const slug = `${pref}-iv-${String(i+1).padStart(3,"0")}`;
+      if (i < heroes.length) { out.push({ ...heroes[i], slug }); continue; }
+      const cat = CATS[i % CATS.length];
+      const pn = prefName[pref] ?? pref;
+      out.push({
+        slug,
+        pref, company:`${pn.replace(/[都道府県]$/,"")}${["製作所","ファーム","工房","商店","デザイン","フーズ"][i%6]}（サンプル）`,
+        person:["田中 健","鈴木 花","佐々木 亮","井上 美和","渡辺 隆","小林 彩"][i%6],
+        role:["代表取締役","事業責任者","3代目","共同創業者","工場長","マネージャー"][i%6],
+        cat, title:`${pn}で挑戦する、${cat}のストーリー（サンプル${i+1}）`,
+        sub:"地域とともに歩む、これからの仕事のかたち",
+        tags:["地元企業","経営者","まちづくり","Uターン","地域プロジェクト"].slice(0, 2+ (i%3)).join(","),
+      });
+    }
+  }
+  return out;
+}
+function body(s: ISeed){
+  return {
+    bodyAbout:`${s.company}は、${prefName[s.pref]}で事業を営む${s.cat}です。［取材で確認：事業の概要と規模］`,
+    bodyWhyLocal:`この地域で事業をする理由——${prefName[s.pref]}の風土と人が、私たちのものづくり／サービスの土台です。［取材で確認］`,
+    bodyStart:`はじまりのきっかけ。［取材で確認：創業・参画の経緯］`,
+    bodyStrength:`地域だからこその強み。地元のネットワークと信頼が最大の資産です。［取材で確認］`,
+    bodyChallenge:`いま抱えている課題は、人材採用と販路の拡大。［取材で確認］`,
+    bodyFuture:`これから挑戦したいこと。地域の外——東京や全国、海外へ。［取材で確認］`,
+    bodyLocalLove:`地元への想い。この土地で挑戦し続ける理由がここにあります。［取材で確認］`,
+    bodyConnect:`東京・全国とつながるなら。副業・採用・取引など、関わり方はいろいろ。［取材で確認］`,
+    bodyMessage:`読者へ——${prefName[s.pref]}には、まだ知らない面白い仕事があります。一度、会いにきてください。`,
+    compRepresentative:`${s.person}`, compBusiness:`${s.cat}`, compFounded:"", compAddress:prefName[s.pref], compUrl:"", compSns:"", compRecruit:"",
+  };
+}
+
+const features = [
+  { slug:"chiho-x-wakamono", title:"地方×若者。まちの未来をつくる新世代", subtitle:"Uターン・学生・移住者たちのいま", theme:"地方×若者", summary:"若い世代が地域で挑戦する動きを特集。", relatedTags:"若者,Uターン,まちづくり", status:"published" },
+  { slug:"uturn-keieisha", title:"Uターン経営者という選択", subtitle:"東京で学び、地元で挑む人たち", theme:"Uターン経営者", summary:"都市の経験を地元に還元する経営者たち。", relatedTags:"Uターン,経営者", status:"published" },
+  { slug:"chiho-x-ai", title:"地方×AI。テクノロジーで変わる地域の仕事", subtitle:"DXの現場から", theme:"地方×AI", summary:"地方企業のAI・DX活用最前線。", relatedTags:"DX,地元企業", status:"published" },
+];
+
 async function main() {
   const now = new Date();
   for (const p of prefectures) await prisma.prefecture.upsert({ where:{slug:p.slug}, update:p, create:p });
@@ -131,6 +197,41 @@ async function main() {
   for (const p of projects) { const d:any={...p, publishedAt: p.status==="published"?now:null}; await prisma.project.upsert({ where:{slug:p.slug}, update:d, create:d }); }
   for (const e of events) { const d:any={...e, heldOn:null, publishedAt: e.status==="published"?now:null}; await prisma.event.upsert({ where:{slug:e.slug}, update:d, create:d }); }
   for (const o of orgs) { const d:any={...o, publishedAt: o.status==="published"?now:null}; await prisma.organization.upsert({ where:{slug:o.slug}, update:d, create:d }); }
-  console.log(`Seeded. prefectures=${prefectures.length} companies=${companies.length} people=${people.length} projects=${projects.length} events=${events.length} orgs=${orgs.length}`);
+
+  // インタビュー（公開日を過去3か月に分散・県ラウンドロビンで並べ最新枠を多県に）
+  const raw = makeInterviews();
+  const byPref: Record<string, typeof raw> = {};
+  for (const s of raw) (byPref[s.pref] ??= []).push(s);
+  const queues = Object.values(byPref);
+  const interviews: typeof raw = [];
+  let more = true;
+  while (more) {
+    more = false;
+    for (const q of queues) { const x = q.shift(); if (x) { interviews.push(x); more = true; } }
+  }
+  let idx = 0;
+  for (const s of interviews) {
+    const slug = s.slug!;
+    ++idx;
+    const publishedAt = new Date(now.getTime() - idx * 3 * 24 * 3600 * 1000); // 3日おきに過去へ
+    const d:any = {
+      slug, status:"published", prefecture:s.pref, city:"",
+      companyName:s.company, personName:s.person, personRole:s.role,
+      category:s.cat, tags:s.tags, title:s.title, subtitle:s.sub, mainImage:"",
+      ...body(s),
+      topPick: idx <= 5, recommend: idx <= 8, featured: idx % 5 === 0,
+      seoTitle:`${s.title}｜${prefName[s.pref]}のインタビュー｜地元で働こう`,
+      seoDescription:`${prefName[s.pref]}で挑戦する${s.company}／${s.person}さんのインタビュー。${s.sub}`,
+      publishedAt,
+    };
+    await prisma.interview.upsert({ where:{slug}, update:d, create:d });
+  }
+
+  for (const f of features) {
+    const d:any = { ...f, publishedAt: f.status==="published"?now:null };
+    await prisma.feature.upsert({ where:{slug:f.slug}, update:d, create:d });
+  }
+
+  console.log(`Seeded. prefectures=${prefectures.length} interviews=${interviews.length} features=${features.length} companies=${companies.length}`);
 }
 main().catch(e=>{console.error(e);process.exit(1);}).finally(()=>prisma.$disconnect());

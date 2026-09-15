@@ -203,3 +203,94 @@ model Inquiry {
   handled    Boolean  @default(false)
   createdAt  DateTime @default(now())
 }
+
+// インタビュー記事（メディアの中核コンテンツ・仕様§13/§15/§16）
+model Interview {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  status      String  @default("published")     // published/draft/private
+  prefecture  String                              // 県slug（47マスタから選択）
+  city        String  @default("")               // 市区町村
+  // 企業・人物（プロフィールは Company/Person に分離可・ここは表示用）
+  companyName String  @default("")
+  companySlug String  @default("")               // Company への任意リンク
+  personName  String  @default("")
+  personRole  String  @default("")               // 役職
+  category    String  @default("地元企業・経営者") // 仕様§11
+  tags        String  @default("")               // カンマ区切り
+  // 見出し・画像
+  title       String
+  subtitle    String  @default("")
+  mainImage   String  @default("")
+  subImages   String  @default("")               // カンマ区切り
+  // 本文セクション（仕様§13）
+  bodyAbout      String @default("")             // この会社について
+  bodyWhyLocal   String @default("")             // この地域で事業をする理由
+  bodyStart      String @default("")             // 始めたきっかけ
+  bodyStrength   String @default("")             // 地域だからこその強み
+  bodyChallenge  String @default("")             // 現在抱えている課題
+  bodyFuture     String @default("")             // これから挑戦したいこと
+  bodyLocalLove  String @default("")             // 地元への想い
+  bodyConnect    String @default("")             // 東京・全国とつながるなら
+  bodyMessage    String @default("")             // 読者へのメッセージ
+  // 企業プロフィールカード（仕様§14・任意）
+  compRepresentative String @default("")
+  compAddress    String @default("")
+  compFounded    String @default("")
+  compBusiness   String @default("")
+  compUrl        String @default("")
+  compSns        String @default("")
+  compRecruit    String @default("")
+  // 掲載フラグ（仕様§15）
+  topPick     Boolean @default(false)           // TOPページ掲載
+  recommend   Boolean @default(false)           // おすすめ
+  featured    Boolean @default(false)           // 特集掲載
+  // CRM（非公開）
+  crmNotes    String  @default("")
+  owner       String  @default("")
+  introducedBy String @default("")
+  seoTitle    String  @default("")
+  seoDescription String @default("")
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@index([prefecture, status])
+  @@index([category, status])
+}
+
+// 特集（インタビューとは別管理・仕様§10）
+model Feature {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  status      String  @default("published")
+  title       String
+  subtitle    String  @default("")
+  coverImage  String  @default("")
+  theme       String  @default("")               // 地方×若者 等
+  summary     String  @default("")
+  body        String  @default("")               // Markdown
+  relatedTags String  @default("")               // 紐づくタグ（カンマ）
+  seoTitle    String  @default("")
+  seoDescription String @default("")
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// 案件・受注（8,000万トラッキング）
+model Deal {
+  id          String   @id @default(cuid())
+  companyName String
+  companySlug String   @default("")
+  prefecture  String   @default("")
+  title       String   @default("")            // 商材・提案名
+  tier        String   @default("入口(採用ページ)") // 入口/中核/大型/継続/協賛送客
+  amount      Int      @default(0)              // 金額（円）
+  dealStatus  String   @default("提案中")       // 提案中/受注/失注/継続中
+  owner       String   @default("")             // クローザー/担当
+  notes       String   @default("")
+  closedAt    DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@index([prefecture, dealStatus])
+}

@@ -5,7 +5,7 @@ export const metadata: Metadata = { title: "Roots Nextについて" };
 export default function About() {
   return (
     <main>
-      <PageHero eyebrow="ABOUT" title="「地元で働こう」について" lead={SITE.tagline} />
+      <PageHero eyebrow="ABOUT" title="「地元で働こう」について" lead={SITE.lead} />
       <div className="mx-auto max-w-3xl px-5 py-12">
         <Crumbs items={[{href:"/",label:"ホーム"},{label:"運営について"}]} />
         <div className="prose-j">

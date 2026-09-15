@@ -4,21 +4,25 @@ import { SITE } from "@/lib/constants";
 export const dynamic = "force-dynamic";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = SITE.url;
-  const [prefs, companies, people, projects, events, orgs] = await Promise.all([
+  const [prefs, interviews, features, companies, people, projects, events, orgs] = await Promise.all([
     prisma.prefecture.findMany({ where:{published:true}, select:{slug:true,updatedAt:true} }),
+    prisma.interview.findMany({ where:{status:"published"}, select:{slug:true,updatedAt:true} }),
+    prisma.feature.findMany({ where:{status:"published"}, select:{slug:true,updatedAt:true} }),
     prisma.company.findMany({ where:{status:"published"}, select:{slug:true,updatedAt:true} }),
     prisma.person.findMany({ where:{status:"published"}, select:{slug:true,updatedAt:true} }),
     prisma.project.findMany({ where:{status:"published"}, select:{slug:true,updatedAt:true} }),
     prisma.event.findMany({ where:{status:"published"}, select:{slug:true,updatedAt:true} }),
     prisma.organization.findMany({ where:{status:"published"}, select:{slug:true,updatedAt:true} }),
   ]);
-  const stat = ["","/prefectures","/companies","/people","/projects","/events","/organizations","/join","/for-companies","/about","/company","/editorial-policy","/privacy","/contact"];
+  const stat = ["","/prefectures","/interviews","/features","/kenjinkai","/search","/companies","/people","/projects","/events","/organizations","/join","/for-companies","/about","/company","/editorial-policy","/privacy","/contact"];
   const staticUrls: MetadataRoute.Sitemap = stat.map(p=>({ url:`${base}${p}`, changeFrequency:"weekly", priority: p===""?1:0.7 }));
   const dyn = (arr:any[], path:string, pr=0.8): MetadataRoute.Sitemap =>
     arr.map(x=>({ url:`${base}${path}/${x.slug}`, lastModified:x.updatedAt, changeFrequency:"weekly" as const, priority:pr }));
   return [
     ...staticUrls,
     ...dyn(prefs,"/prefecture",0.9),
+    ...dyn(interviews,"/interviews",0.9),
+    ...dyn(features,"/features",0.8),
     ...dyn(companies,"/companies"),
     ...dyn(people,"/people"),
     ...dyn(projects,"/projects"),

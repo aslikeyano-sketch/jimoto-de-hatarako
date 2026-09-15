@@ -1,5 +1,5 @@
 // 設定駆動CMS：モデルとフィールドの定義。ここを増やせば管理画面が自動で対応する。
-import { PERSON_CATEGORIES, ORG_TYPES, PROJECT_THEMES, EVENT_CATEGORIES } from "@/lib/constants";
+import { PERSON_CATEGORIES, ORG_TYPES, PROJECT_THEMES, EVENT_CATEGORIES, INTERVIEW_CATEGORIES, FEATURE_THEMES } from "@/lib/constants";
 import { STAGES } from "@/lib/pipeline";
 
 export type FieldType = "text" | "textarea" | "md" | "select" | "bool" | "date" | "prefecture";
@@ -29,6 +29,61 @@ const meta = (): Field[] => ([
 ]);
 
 export const MODELS: ModelDef[] = [
+  {
+    key:"interviews", delegate:"interview", label:"インタビュー", emoji:"🎤", titleField:"title",
+    listCols:[{field:"title",label:"タイトル"},{field:"prefecture",label:"県"},{field:"companyName",label:"企業"},{field:"category",label:"区分"}],
+    fields:[
+      { name:"title", label:"記事タイトル", type:"text", required:true, section:"基本" },
+      { name:"subtitle", label:"サブタイトル", type:"text", section:"基本" },
+      { name:"prefecture", label:"都道府県", type:"prefecture", section:"基本" },
+      { name:"city", label:"市区町村", type:"text", section:"基本" },
+      { name:"category", label:"カテゴリー", type:"select", options:INTERVIEW_CATEGORIES, section:"基本" },
+      { name:"tags", label:"タグ（カンマ区切り）", type:"text", section:"基本" },
+      { name:"mainImage", label:"メイン画像URL", type:"text", section:"基本" },
+      { name:"subImages", label:"サブ画像URL（カンマ区切り）", type:"text", section:"基本" },
+      { name:"companyName", label:"企業名", type:"text", section:"登場する企業・人物" },
+      { name:"companySlug", label:"企業ページのslug（任意）", type:"text", section:"登場する企業・人物" },
+      { name:"personName", label:"人物名", type:"text", section:"登場する企業・人物" },
+      { name:"personRole", label:"役職", type:"text", section:"登場する企業・人物" },
+      { name:"bodyAbout", label:"この会社について", type:"md", section:"本文" },
+      { name:"bodyWhyLocal", label:"この地域で事業をする理由", type:"md", section:"本文" },
+      { name:"bodyStart", label:"始めたきっかけ", type:"md", section:"本文" },
+      { name:"bodyStrength", label:"地域だからこその強み", type:"md", section:"本文" },
+      { name:"bodyChallenge", label:"現在抱えている課題", type:"md", section:"本文" },
+      { name:"bodyFuture", label:"これから挑戦したいこと", type:"md", section:"本文" },
+      { name:"bodyLocalLove", label:"地元への想い", type:"md", section:"本文" },
+      { name:"bodyConnect", label:"東京・全国とつながるなら", type:"md", section:"本文" },
+      { name:"bodyMessage", label:"読者へのメッセージ", type:"md", section:"本文" },
+      { name:"compRepresentative", label:"代表者", type:"text", section:"企業プロフィール（任意）" },
+      { name:"compAddress", label:"所在地", type:"text", section:"企業プロフィール（任意）" },
+      { name:"compFounded", label:"設立", type:"text", section:"企業プロフィール（任意）" },
+      { name:"compBusiness", label:"事業内容", type:"textarea", section:"企業プロフィール（任意）" },
+      { name:"compUrl", label:"企業Webサイト", type:"text", section:"企業プロフィール（任意）" },
+      { name:"compSns", label:"SNS", type:"text", section:"企業プロフィール（任意）" },
+      { name:"compRecruit", label:"採用情報URL", type:"text", section:"企業プロフィール（任意）" },
+      { name:"topPick", label:"TOPページ掲載", type:"bool", section:"掲載設定" },
+      { name:"recommend", label:"おすすめ記事", type:"bool", section:"掲載設定" },
+      { name:"featured", label:"特集に掲載", type:"bool", section:"掲載設定" },
+      { name:"owner", label:"取材担当（非公開）", type:"text", section:"取材・担当（非公開）", internal:true },
+      { name:"introducedBy", label:"紹介者（非公開）", type:"text", section:"取材・担当（非公開）", internal:true },
+      { name:"crmNotes", label:"取材メモ（非公開）", type:"textarea", section:"取材・担当（非公開）", internal:true },
+      ...meta(),
+    ],
+  },
+  {
+    key:"features", delegate:"feature", label:"特集", emoji:"📰", titleField:"title",
+    listCols:[{field:"title",label:"タイトル"},{field:"theme",label:"テーマ"}],
+    fields:[
+      { name:"title", label:"特集タイトル", type:"text", required:true, section:"基本" },
+      { name:"subtitle", label:"サブタイトル", type:"text", section:"基本" },
+      { name:"theme", label:"テーマ", type:"select", options:FEATURE_THEMES, section:"基本" },
+      { name:"coverImage", label:"カバー画像URL", type:"text", section:"基本" },
+      { name:"summary", label:"概要", type:"textarea", section:"公開情報" },
+      { name:"body", label:"本文（Markdown）", type:"md", section:"公開情報" },
+      { name:"relatedTags", label:"紐づくタグ（カンマ区切り）", type:"text", section:"公開情報" },
+      ...meta(),
+    ],
+  },
   {
     key:"companies", delegate:"company", label:"企業", emoji:"🏢", titleField:"name", hasStage:true,
     listCols:[{field:"name",label:"会社名"},{field:"prefecture",label:"県"},{field:"industry",label:"業種"}],

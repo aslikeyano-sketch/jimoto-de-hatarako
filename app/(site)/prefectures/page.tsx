@@ -1,56 +1,46 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
+import { PREFECTURES_MASTER, REGIONS } from "@/lib/prefectures-master";
+import { JapanMap } from "@/components/japan-map";
 import { PageHero, Crumbs } from "@/components/ui";
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "都道府県から探す" };
-
-const REGION_ORDER = ["北海道","東北","関東","中部","近畿","中国","四国","九州","沖縄","その他"];
+export const metadata: Metadata = { title: "地域から探す｜地元で働こう", description: "日本地図から都道府県を選んで、全国の地元企業インタビューを探せます。" };
 
 export default async function Prefectures() {
-  const prefs = await prisma.prefecture.findMany({ where:{published:true}, orderBy:{name:"asc"} });
-  // 県ごとの掲載数（社長インタビュー＝企業＋人物＋プロジェクト＋イベント）
-  const w = { status: "published" };
-  const [co, pe, pj, ev] = await Promise.all([
-    prisma.company.groupBy({ by:["prefecture"], where:w, _count:true }),
-    prisma.person.groupBy({ by:["prefecture"], where:w, _count:true }),
-    prisma.project.groupBy({ by:["prefecture"], where:w, _count:true }),
-    prisma.event.groupBy({ by:["prefecture"], where:w, _count:true }),
-  ]);
-  const count = (slug:string) => {
-    const g = (arr:any[]) => arr.find(x=>x.prefecture===slug)?._count ?? 0;
-    return { total: g(co)+g(pe)+g(pj)+g(ev), companies: g(co) };
-  };
-  // 地方ブロックでグループ化
-  const byRegion: Record<string, typeof prefs> = {};
-  for (const p of prefs) (byRegion[p.region || "その他"] ??= []).push(p);
-  const regions = Object.keys(byRegion).sort((a,b)=>REGION_ORDER.indexOf(a)-REGION_ORDER.indexOf(b));
+  const grouped = await prisma.interview.groupBy({ by: ["prefecture"], where: { status: "published" }, _count: { _all: true } });
+  const counts: Record<string, number> = {};
+  grouped.forEach((g) => (counts[g.prefecture] = g._count._all));
 
   return (
     <main>
-      <PageHero eyebrow="PREFECTURES" title="都道府県から探す" lead="あなたの地元を選んで、地元の社長・人・活動・イベントを見てみよう。" />
-      <div className="mx-auto max-w-6xl px-5 py-10 space-y-10">
-        <Crumbs items={[{href:"/",label:"ホーム"},{label:"都道府県から探す"}]} />
-        {regions.map(region=>(
-          <div key={region}>
-            <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-slate-900"><span className="inline-block h-4 w-1 rounded bg-brand-500" />{region}</h2>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-              {byRegion[region].map(p=>{
-                const c = count(p.slug);
-                return (
-                  <Link key={p.id} href={`/prefecture/${p.slug}`} className="group rounded-2xl border border-slate-200 bg-white p-5 transition-colors hover:border-brand-300 hover:bg-brand-50">
-                    <div className="flex items-baseline justify-between">
-                      <p className="text-lg font-bold text-slate-900 group-hover:text-brand-700">{p.name}</p>
-                      {c.total>0 && <span className="text-xs font-semibold text-brand-600">{c.total}件</span>}
-                    </div>
-                    <p className="mt-1 line-clamp-1 text-xs text-brand-600/80">{p.catchcopy}</p>
-                  </Link>
-                );
-              })}
+      <PageHero eyebrow="地域から探す" title="日本地図から、地元を選ぶ。" lead="47都道府県のどこかに、あなたの知らない面白い会社と人がいます。地図をクリックして、その地域のインタビューへ。" />
+      <div className="mx-auto max-w-6xl space-y-12 px-5 py-10">
+        <Crumbs items={[{ href: "/", label: "ホーム" }, { label: "地域から探す" }]} />
+
+        <div className="mx-auto max-w-2xl">
+          <JapanMap counts={counts} />
+        </div>
+
+        {REGIONS.map((region) => {
+          const prefs = PREFECTURES_MASTER.filter((p) => p.region === region);
+          return (
+            <div key={region}>
+              <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-navy-900"><span className="inline-block h-4 w-1 rounded bg-brand-500" />{region}</h2>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                {prefs.map((p) => {
+                  const c = counts[p.slug] ?? 0;
+                  return (
+                    <Link key={p.slug} href={`/prefecture/${p.slug}`} className={`group flex items-baseline justify-between rounded-2xl border border-slate-200 bg-white p-4 shadow-card transition-colors hover:border-brand-300 hover:bg-brand-50 ${c ? "" : "opacity-70"}`}>
+                      <span className="text-base font-bold text-navy-900 group-hover:text-brand-700">{p.name}</span>
+                      {c > 0 && <span className="rounded-full bg-brand-50 px-2 text-xs font-bold text-brand-600">{c}</span>}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        ))}
-        <p className="text-sm text-slate-400">※順次、全国47都道府県に拡大していきます。</p>
+          );
+        })}
       </div>
     </main>
   );
