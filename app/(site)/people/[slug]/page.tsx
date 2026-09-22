@@ -33,7 +33,7 @@ export default async function PersonDetail({params}:{params:{slug:string}}){
         <Sec title="東京にいる地元出身者へ" body={p.message} />
         <div className="mt-10 rounded-2xl bg-brand-50/60 p-6 text-center">
           <p className="font-bold text-slate-800">この人と地域に関わる</p>
-          <div className="mt-4 flex flex-wrap justify-center gap-3"><CTAButton href="/register">地元と関わりたい人登録</CTAButton><CTAButton href="/join" variant="outline">関わり方を見る</CTAButton></div>
+          <div className="mt-4 flex flex-wrap justify-center gap-3"><CTAButton href="/join">関わり方を見る</CTAButton><CTAButton href="/contact" variant="outline">お問い合わせ</CTAButton></div>
         </div>
       </article>
     </main>

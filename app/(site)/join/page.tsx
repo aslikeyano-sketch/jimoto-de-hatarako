@@ -17,9 +17,9 @@ export default function Join() {
           ))}
         </div>
         <div className="mt-10 rounded-3xl brand-gradient px-6 py-10 text-center text-white">
-          <p className="text-xl font-bold">まずは「地元と関わりたい」を登録</p>
-          <p className="mt-2 text-sm text-white/90">出身地と興味を教えてください。合う企業・活動・イベントをご案内します。</p>
-          <div className="mt-5"><CTAButton href="/register" variant="white">登録する（無料）</CTAButton></div>
+          <p className="text-xl font-bold">地元との関わり方を相談する</p>
+          <p className="mt-2 text-sm text-white/90">出身地や興味を教えてください。合う企業・活動・イベントをご案内します。</p>
+          <div className="mt-5"><CTAButton href="/contact" variant="white">お問い合わせ</CTAButton></div>
         </div>
       </div>
     </main>

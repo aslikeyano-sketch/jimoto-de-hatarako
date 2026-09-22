@@ -17,17 +17,16 @@ export function SiteFooter() {
             <li><Link href="/prefectures" className="hover:text-white">地域から探す（日本地図）</Link></li>
             <li><Link href="/interviews" className="hover:text-white">インタビュー</Link></li>
             <li><Link href="/features" className="hover:text-white">特集</Link></li>
-            <li><Link href="/kenjinkai" className="hover:text-white">県人会</Link></li>
+            <li><a href="https://chiho-sosei-site.vercel.app/cases" target="_blank" rel="noopener noreferrer" className="hover:text-white">県人会</a></li>
             <li><Link href="/search" className="hover:text-white">検索</Link></li>
           </ul>
         </div>
         <div>
           <h4 className="text-sm font-bold text-white">関わる・つながる</h4>
           <ul className="mt-3 space-y-2 text-sm text-slate-400">
-            <li><Link href="/for-companies" className="hover:text-white">地域の企業を応援する</Link></li>
-            <li><Link href="/inquiry" className="hover:text-white">取材・掲載を希望する</Link></li>
+            <li><Link href="/inquiry" className="hover:text-white">掲載を依頼する</Link></li>
+            <li><Link href="/for-companies" className="hover:text-white">取材を受けたい企業・団体へ</Link></li>
             <li><Link href="/submit" className="hover:text-white">情報提供・企業推薦</Link></li>
-            <li><Link href="/register" className="hover:text-white">地元と関わりたい人登録</Link></li>
             <li><Link href="/about" className="hover:text-white">このメディアについて</Link></li>
           </ul>
         </div>

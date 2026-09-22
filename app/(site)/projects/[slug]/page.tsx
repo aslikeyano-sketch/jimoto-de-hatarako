@@ -26,8 +26,8 @@ export default async function ProjectDetail({params}:{params:{slug:string}}){
         <Sec title="参加方法" body={p.joinHow} />
         <div className="mt-10 rounded-3xl brand-gradient px-6 py-10 text-center text-white">
           <p className="text-xl font-bold">この活動に参加したい</p>
-          <p className="mt-2 text-sm text-white/90">東京からでも、副業でも、週末だけでも。まずは関心を教えてください。</p>
-          <div className="mt-5"><CTAButton href="/register" variant="white">参加・関心を登録する</CTAButton></div>
+          <p className="mt-2 text-sm text-white/90">東京からでも、副業でも、週末だけでも。まずはお気軽にお問い合わせください。</p>
+          <div className="mt-5"><CTAButton href="/contact" variant="white">お問い合わせ</CTAButton></div>
         </div>
       </article>
     </main>

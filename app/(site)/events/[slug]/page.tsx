@@ -30,7 +30,7 @@ export default async function EventDetail({params}:{params:{slug:string}}){
         {e.content && <p className="mt-6 whitespace-pre-wrap leading-relaxed text-slate-600">{e.content}</p>}
         <div className="mt-8 flex flex-wrap gap-3">
           {e.applyUrl && <CTAButton href={e.applyUrl} external>申し込む</CTAButton>}
-          <CTAButton href="/register" variant="outline">地元と関わりたい人登録</CTAButton>
+          <CTAButton href="/contact" variant="outline">お問い合わせ</CTAButton>
         </div>
       </article>
     </main>

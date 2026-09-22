@@ -27,7 +27,7 @@ export default async function OrgDetail({params}:{params:{slug:string}}){
             {o.url&&<div className="py-3"><a href={o.url} target="_blank" rel="noopener noreferrer" className="text-brand-600 hover:underline">公式サイト →</a></div>}
           </dl>
         )}
-        <div className="mt-10 text-center"><CTAButton href="/register">この団体・地域に関わる</CTAButton></div>
+        <div className="mt-10 text-center"><CTAButton href="/contact">お問い合わせ</CTAButton></div>
       </article>
     </main>
   );

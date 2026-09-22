@@ -56,7 +56,7 @@ export default async function CompanyDetail({params}:{params:{slug:string}}){
         <div className="mt-10 rounded-2xl bg-brand-50/60 p-6 text-center">
           <p className="font-bold text-slate-800">この会社が気になったら</p>
           <p className="mt-1 text-sm text-slate-600">東京から関わる・副業・Uターンなど、関わり方はいろいろ。</p>
-          <div className="mt-4 flex flex-wrap justify-center gap-3"><CTAButton href="/register">地元と関わりたい人登録</CTAButton><CTAButton href="/join" variant="outline">関わり方を見る</CTAButton></div>
+          <div className="mt-4 flex flex-wrap justify-center gap-3"><CTAButton href="/join">関わり方を見る</CTAButton><CTAButton href="/contact" variant="outline">お問い合わせ</CTAButton></div>
         </div>
       </article>
     </main>

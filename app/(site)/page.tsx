@@ -144,19 +144,12 @@ export default async function Home() {
 
       {/* CTA */}
       <section className="mx-auto max-w-[1440px] px-5 py-14">
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-3xl brand-gradient px-7 py-10 text-white">
-            <h3 className="text-xl font-bold">地域の企業を応援したい方へ</h3>
-            <p className="mt-2 text-sm text-white/90">取材・掲載・PR・採用のご相談を受け付けています。まずは紹介から。</p>
-            <Link href="/for-companies" className="mt-5 inline-block rounded-full bg-white px-6 py-3 text-sm font-bold text-brand-700 shadow">取材・掲載を相談する →</Link>
-          </div>
-          <div className="rounded-3xl border-2 border-brand-200 bg-brand-50/40 px-7 py-10">
-            <h3 className="text-xl font-bold text-navy-900">情報提供・取材応募</h3>
-            <p className="mt-2 text-sm text-slate-600">「この会社・人を取材してほしい」——地域からの推薦・情報提供をお待ちしています。</p>
-            <div className="mt-5 flex flex-wrap gap-3">
-              <Link href="/inquiry" className="rounded-full brand-gradient px-6 py-3 text-sm font-bold text-white shadow">取材を希望する</Link>
-              <Link href="/submit" className="rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50">企業を推薦する</Link>
-            </div>
+        <div className="rounded-3xl border-2 border-brand-200 bg-brand-50/40 px-7 py-10 text-center md:px-10 md:py-12">
+          <h3 className="text-xl font-bold text-navy-900 md:text-2xl">情報提供・取材応募</h3>
+          <p className="mx-auto mt-2 max-w-2xl text-sm text-slate-600">「この会社・人を取材してほしい」——地域からの推薦・情報提供をお待ちしています。掲載のご依頼も受け付けています。</p>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <Link href="/inquiry" className="rounded-full brand-gradient px-6 py-3 text-sm font-bold text-white shadow">掲載を依頼する</Link>
+            <Link href="/submit" className="rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50">企業を推薦する</Link>
           </div>
         </div>
       </section>

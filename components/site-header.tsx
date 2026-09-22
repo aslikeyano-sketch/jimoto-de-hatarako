@@ -18,11 +18,17 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-5 text-sm font-medium text-slate-600 lg:flex xl:gap-7">
-          {NAV.map((n) => (
-            <Link key={n.href} href={n.href} className={`whitespace-nowrap transition-colors hover:text-brand-700 ${active(n.href) ? "font-bold text-brand-700" : ""}`}>
-              {n.label}
-            </Link>
-          ))}
+          {NAV.map((n) =>
+            n.href.startsWith("http") ? (
+              <a key={n.href} href={n.href} target="_blank" rel="noopener noreferrer" className="whitespace-nowrap transition-colors hover:text-brand-700">
+                {n.label}
+              </a>
+            ) : (
+              <Link key={n.href} href={n.href} className={`whitespace-nowrap transition-colors hover:text-brand-700 ${active(n.href) ? "font-bold text-brand-700" : ""}`}>
+                {n.label}
+              </Link>
+            )
+          )}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -43,11 +49,17 @@ export function SiteHeader() {
       {open && (
         <div className="border-t border-slate-100 bg-white lg:hidden">
           <nav className="mx-auto flex max-w-[1440px] flex-col px-5 py-2">
-            {NAV.map((n) => (
-              <Link key={n.href} href={n.href} onClick={() => setOpen(false)} className="border-b border-slate-50 py-3 text-sm font-medium text-slate-700">
-                {n.label}
-              </Link>
-            ))}
+            {NAV.map((n) =>
+              n.href.startsWith("http") ? (
+                <a key={n.href} href={n.href} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)} className="border-b border-slate-50 py-3 text-sm font-medium text-slate-700">
+                  {n.label}
+                </a>
+              ) : (
+                <Link key={n.href} href={n.href} onClick={() => setOpen(false)} className="border-b border-slate-50 py-3 text-sm font-medium text-slate-700">
+                  {n.label}
+                </Link>
+              )
+            )}
             <Link href="/search" onClick={() => setOpen(false)} className="py-3 text-sm font-medium text-slate-700">検索</Link>
             <Link href={HEADER_CTA.href} onClick={() => setOpen(false)} className="my-3 rounded-full brand-gradient px-5 py-2.5 text-center text-xs font-bold text-white">
               {HEADER_CTA.label} →

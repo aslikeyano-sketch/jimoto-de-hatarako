@@ -24,8 +24,8 @@ export default function About() {
           <p>Roots Nextは、県人会を起点に、地域の企業・人・行政・大学・学生・地域課題と継続的につながる基盤づくりを進めています。</p>
         </div>
         <div className="mt-10 flex flex-wrap gap-3">
-          <CTAButton href="/inquiry">取材・掲載を希望する</CTAButton>
-          <CTAButton href="/register" variant="outline">地元と関わりたい人登録</CTAButton>
+          <CTAButton href="/inquiry">掲載を依頼する</CTAButton>
+          <CTAButton href="/contact" variant="outline">お問い合わせ</CTAButton>
         </div>
       </div>
     </main>

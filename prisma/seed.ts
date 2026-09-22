@@ -143,10 +143,9 @@ const HERO: Record<string, ISeed[]> = {
 };
 function makeInterviews(): ISeed[] {
   const out: ISeed[] = [];
-  // 件数配分（地図の段階を作る）
+  // サンプルは大分1件のみ
   const plan: Record<string, number> = {
-    oita:12, miyazaki:8, hokkaido:6, fukuoka:5, tokyo:5, kagawa:4,
-    niigata:3, kochi:3, ishikawa:2, nagasaki:2, ehime:1, kagoshima:1,
+    oita:1,
   };
   for (const [pref, n] of Object.entries(plan)) {
     const heroes = HERO[pref] ?? [];
@@ -198,7 +197,10 @@ async function main() {
   for (const e of events) { const d:any={...e, heldOn:null, publishedAt: e.status==="published"?now:null}; await prisma.event.upsert({ where:{slug:e.slug}, update:d, create:d }); }
   for (const o of orgs) { const d:any={...o, publishedAt: o.status==="published"?now:null}; await prisma.organization.upsert({ where:{slug:o.slug}, update:d, create:d }); }
 
-  // インタビュー（公開日を過去3か月に分散・県ラウンドロビンで並べ最新枠を多県に）
+  // 旧サンプル記事（slugに -iv- を含む）を一度削除してから作り直す（本番でも重複しないように）
+  await prisma.interview.deleteMany({ where: { slug: { contains: "-iv-" } } });
+
+  // インタビュー（サンプルは大分1件のみ）
   const raw = makeInterviews();
   const byPref: Record<string, typeof raw> = {};
   for (const s of raw) (byPref[s.pref] ??= []).push(s);

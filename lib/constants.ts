@@ -20,10 +20,10 @@ export const NAV = [
   { href: "/prefectures", label: "地域から探す" },
   { href: "/interviews", label: "インタビュー" },
   { href: "/features", label: "特集" },
-  { href: "/kenjinkai", label: "県人会" },
+  { href: "https://chiho-sosei-site.vercel.app/cases", label: "県人会" },
   { href: "/contact", label: "お問い合わせ" },
 ];
-export const HEADER_CTA = { href: "/for-companies", label: "地域の企業を応援する" };
+export const HEADER_CTA = { href: "/inquiry", label: "掲載を依頼する" };
 
 // 人気キーワード（仕様§5）
 export const POPULAR_KEYWORDS = ["地元企業", "経営者", "地域プロジェクト", "Uターン", "まちづくり"];
