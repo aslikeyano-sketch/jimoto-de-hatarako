@@ -4,7 +4,6 @@ import { PageHero, Crumbs } from "@/components/ui";
 export const metadata: Metadata = { title: "お問い合わせ" };
 const CARDS = [
   { href:"/for-companies", t:"取材・掲載を受けたい", d:"企業・団体・行政・大学・議員の方。取材趣意・流れはこちら。" },
-  { href:"/inquiry", t:"取材・掲載を希望する（申込）", d:"掲載のお申し込み・ご相談フォーム。" },
   { href:"/submit", t:"情報提供・イベント掲載", d:"イベント・求人・地域ニュースなどの情報をお寄せください。" },
 ];
 export default function Contact() {

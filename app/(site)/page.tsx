@@ -36,7 +36,7 @@ export default async function Home() {
                 <span className="relative z-10">{SITE.heroTitleB}</span>
                 <span className="absolute inset-x-0 bottom-1 z-0 h-3 bg-sky2-200/70" />
               </span>
-              {SITE.heroTitleC}
+              <span className="whitespace-nowrap">{SITE.heroTitleC}</span>
             </h1>
             <p className="fade-up d3 mt-5 text-sm leading-relaxed text-slate-600">{SITE.lead}</p>
             <div className="fade-up d4 mt-6"><SearchBar /></div>
