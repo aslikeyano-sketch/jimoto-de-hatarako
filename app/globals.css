@@ -82,5 +82,9 @@ body { background:#ffffff; color:#0f2038; }
 .prose-j figure { max-width:240px; margin:1.4rem auto; }
 .prose-j figure img { margin:0; }
 .prose-j figcaption { margin-top:.5rem; font-size:.8rem; color:#64748b; text-align:center; }
+/* 写真を横並び（2枚）にするグループ */
+.prose-j .photo-row { display:flex; gap:.6rem; max-width:480px; margin:1.6rem auto; }
+.prose-j .photo-row figure { max-width:none; margin:0; flex:1 1 0; min-width:0; }
+.prose-j .photo-row img { border-radius:.7rem; }
 .no-scrollbar::-webkit-scrollbar{ display:none; }
 .no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
