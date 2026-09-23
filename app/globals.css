@@ -78,5 +78,9 @@ body { background:#ffffff; color:#0f2038; }
 .prose-j ul { list-style:disc;margin:.85rem 0;padding-left:1.4rem; }
 .prose-j li { margin:.35rem 0; }
 .prose-j strong { color:#1d4ed8; }
+.prose-j img { width:100%; border-radius:1rem; margin:1.6rem 0; box-shadow:0 1px 3px rgba(15,42,77,.06),0 8px 24px rgba(15,42,77,.08); }
+.prose-j figure { margin:1.6rem 0; }
+.prose-j figure img { margin:0; }
+.prose-j figcaption { margin-top:.5rem; font-size:.82rem; color:#64748b; text-align:center; }
 .no-scrollbar::-webkit-scrollbar{ display:none; }
 .no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
