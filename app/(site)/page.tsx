@@ -29,17 +29,21 @@ export default async function Home() {
           {/* 左：メッセージ＋検索 */}
           <div className="lg:col-span-4">
             <p className="fade-up d1 brush text-sm font-semibold text-brand-600">{SITE.catch}</p>
-            <h1 className="fade-up d2 mt-3 text-[2.1rem] font-bold leading-[1.2] tracking-tight text-navy-900 md:text-[2.6rem]">
-              <span className="text-brand-600">{SITE.heroLead}</span>{SITE.heroTitleA}
+            <h1 className="fade-up d2 mt-3 text-[2rem] font-bold leading-[1.22] tracking-tight text-navy-900 md:text-[2.5rem]">
+              {SITE.heroMain1}
               <br />
               <span className="relative inline-block">
-                <span className="relative z-10">{SITE.heroTitleB}</span>
+                <span className="relative z-10">{SITE.heroMain2}</span>
                 <span className="absolute inset-x-0 bottom-1 z-0 h-3 bg-sky2-200/70" />
               </span>
-              <span className="whitespace-nowrap">{SITE.heroTitleC}</span>
             </h1>
-            <p className="fade-up d3 mt-5 text-sm leading-relaxed text-slate-600">{SITE.lead}</p>
-            <div className="fade-up d4 mt-6"><SearchBar /></div>
+            <p className="fade-up d3 mt-5 text-sm leading-relaxed text-slate-600">{SITE.heroSub}</p>
+            {/* FV内 2CTA（§3） */}
+            <div className="fade-up d4 mt-6 flex flex-wrap gap-3">
+              <Link href="/interviews" className="inline-flex items-center gap-1 rounded-full brand-gradient px-6 py-3 text-sm font-bold text-white shadow-md transition-transform hover:scale-[1.03]">地元の企業を探す →</Link>
+              <Link href="/for-companies" className="inline-flex items-center rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50">取材を受けたい企業はこちら</Link>
+            </div>
+            <div className="fade-up d5 mt-6"><SearchBar /></div>
             <div className="fade-up d5 mt-4">
               <p className="text-xs font-semibold text-slate-400">人気のキーワード</p>
               <div className="mt-2 flex flex-wrap gap-2">
@@ -142,14 +146,14 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* FOR COMPANY（§30-08） */}
       <section className="mx-auto max-w-[1440px] px-5 py-14">
         <div className="rounded-3xl border-2 border-brand-200 bg-brand-50/40 px-7 py-10 text-center md:px-10 md:py-12">
-          <h3 className="text-xl font-bold text-navy-900 md:text-2xl">情報提供・取材応募</h3>
-          <p className="mx-auto mt-2 max-w-2xl text-sm text-slate-600">「この会社・人を取材してほしい」——地域からの推薦・情報提供をお待ちしています。掲載のご依頼も受け付けています。</p>
+          <h3 className="text-xl font-bold text-navy-900 md:text-2xl">あなたの会社の物語を、地元を想う人へ。</h3>
+          <p className="mx-auto mt-2 max-w-2xl text-sm text-slate-600">取材・掲載費はいただいていません。全国各地で挑戦する企業や人の想いを届け、採用・副業・協業・販路・イベントなど、新しい出会いにつなげます。</p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <Link href="/inquiry" className="rounded-full brand-gradient px-6 py-3 text-sm font-bold text-white shadow">掲載を依頼する</Link>
-            <Link href="/submit" className="rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50">企業を推薦する</Link>
+            <Link href="/for-companies" className="rounded-full brand-gradient px-6 py-3 text-sm font-bold text-white shadow">無料取材を申し込む</Link>
+            <Link href="/about" className="rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50">「地元で働こう」とは</Link>
           </div>
         </div>
       </section>

@@ -8,9 +8,12 @@ export const metadata: Metadata = {
 
 const MERITS = [
   { t:"東京の同郷者・若者に届く", d:"県人会ネットワークを通じて、地元を離れた出身者・Uターン層に直接届きます。採用の新しい入口に。" },
-  { t:"取材・掲載は無料", d:"営業や販売が目的ではありません。まずは地元の魅力を伝える取材から。" },
+  { t:"取材・掲載費はいただいていません", d:"全国各地で挑戦する企業や人の想いを届けることが目的です。取材・記事制作・掲載に費用はかかりません。" },
   { t:"記事は自由に使える", d:"完成した記事は採用サイト・SNS・会社案内に活用いただけます。" },
 ];
+// §14 取材から、新しい出会いへ。
+const PIPELINE = ["取材","記事制作","「地元で働こう」に掲載","SNS・Roots Nextネットワークで発信","地元出身者・企業・人材へ届く"];
+const NEW_CONTACTS = ["採用","副業","協業","販路","イベント","地域プロジェクト"];
 const FLOW = [
   "お申し込み（フォーム）","日程調整","取材（対面またはオンライン・約60分）",
   "記事の作成（編集部が原稿化）","内容のご確認（公開前に必ずチェック）","公開・SNSで発信",
@@ -45,6 +48,28 @@ export default function ForCompanies() {
                 <p className="mt-2 text-sm leading-relaxed text-slate-600">{m.d}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* §14 取材から、新しい出会いへ。 */}
+        <section className="rounded-3xl border border-slate-200 bg-slate-50/70 p-6 md:p-8">
+          <h2 className="text-2xl font-bold text-slate-900">取材から、新しい出会いへ。</h2>
+          <p className="mt-2 text-sm text-slate-500">取材は、記事をつくって終わりではありません。発信を通じて、新しい接点が生まれます。</p>
+          <ol className="mt-6 flex flex-col gap-2">
+            {PIPELINE.map((p, i) => (
+              <li key={p} className="flex items-center gap-3">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full brand-gradient text-xs font-bold text-white">{i + 1}</span>
+                <span className="text-sm font-semibold text-navy-800">{p}</span>
+              </li>
+            ))}
+          </ol>
+          <div className="mt-6 rounded-2xl border border-brand-200 bg-white p-5">
+            <p className="text-sm font-bold text-navy-800">新しい接点</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {NEW_CONTACTS.map((c) => (
+                <span key={c} className="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700 ring-1 ring-brand-100">{c}</span>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -96,7 +121,8 @@ export default function ForCompanies() {
           <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-white/90">
             費用はかかりません。地元の想いを、東京にいる同郷者へ届けませんか。ご相談だけでも歓迎です。
           </p>
-          <div className="mt-6"><CTAButton href="/inquiry" variant="white">取材・掲載を希望する</CTAButton></div>
+          <div className="mt-6"><CTAButton href="/inquiry" variant="white">無料取材を申し込む</CTAButton></div>
+          <p className="mt-3 text-xs text-white/80">約1分で完了｜担当者よりご連絡します</p>
         </section>
       </div>
     </main>

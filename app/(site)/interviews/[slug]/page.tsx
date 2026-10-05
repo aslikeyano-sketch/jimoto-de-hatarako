@@ -51,8 +51,11 @@ export default async function InterviewDetail({ params }: { params: { slug: stri
 
   const comp = [
     ["代表者", iv.compRepresentative], ["所在地", iv.compAddress], ["設立", iv.compFounded],
-    ["事業内容", iv.compBusiness], ["Webサイト", iv.compUrl], ["SNS", iv.compSns], ["採用情報", iv.compRecruit],
+    ["事業内容", iv.compBusiness], ["Webサイト", iv.compUrl],
+    ["Instagram", iv.compInstagram], ["X", iv.compX], ["SNS", iv.compSns], ["採用情報", iv.compRecruit],
   ].filter(([, v]) => v);
+  const metWanted = (iv.metWanted ?? "").split(/\r?\n|,/).map((s) => s.trim()).filter(Boolean);
+  const connectHref = `/connect?article=${encodeURIComponent(iv.slug)}`;
 
   const jsonLd = {
     "@context": "https://schema.org", "@type": "Article", headline: iv.title,
@@ -124,7 +127,7 @@ export default async function InterviewDetail({ params }: { params: { slug: stri
                 <div key={k} className="flex gap-3 text-sm">
                   <dt className="w-20 shrink-0 font-semibold text-slate-500">{k}</dt>
                   <dd className="text-navy-800">
-                    {String(k).includes("Web") || String(k).includes("SNS") || String(k).includes("採用") ?
+                    {(String(k).includes("Web") || String(k).includes("SNS") || String(k).includes("採用") || String(k).includes("Instagram") || String(k) === "X") && String(v).startsWith("http") ?
                       <a href={String(v)} target="_blank" rel="noopener noreferrer" className="text-brand-600 underline">{String(v)}</a> : String(v)}
                   </dd>
                 </div>
@@ -132,6 +135,41 @@ export default async function InterviewDetail({ params }: { params: { slug: stri
             </dl>
           </div>
         )}
+
+        {/* この企業が今、出会いたい人（§7/§13） */}
+        {metWanted.length > 0 && (
+          <div className="mt-6 rounded-2xl border border-sky2-200 bg-sky2-50/50 p-6">
+            <h3 className="mb-3 text-sm font-bold text-navy-800">この企業が今、出会いたい人</h3>
+            <div className="flex flex-wrap gap-2">
+              {metWanted.map((m) => (
+                <span key={m} className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-brand-700 ring-1 ring-brand-100">#{m}</span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* 記事末CTA：この企業とつながる（§8） */}
+        <div className="mt-10 overflow-hidden rounded-3xl border-2 border-brand-200 bg-brand-50/40">
+          <div className="px-6 py-8 md:px-10 md:py-10">
+            <p className="text-xs font-bold tracking-wider text-brand-600">CONNECT</p>
+            <h2 className="mt-1 text-xl font-bold text-navy-900 md:text-2xl">この企業とつながる</h2>
+            <p className="mt-3 text-sm leading-relaxed text-slate-600">
+              記事を読んで「もっと話を聞いてみたい」「一緒に仕事をしてみたい」と思った方へ。<br className="hidden md:block" />
+              「地元で働こう」が、{iv.companyName || "この企業"}との出会いをサポートします。
+            </p>
+            <ul className="mt-5 grid gap-2 text-sm text-slate-700 sm:grid-cols-2">
+              {["この企業で働くことに興味がある","副業・プロジェクトで関わりたい","商品・サービスに興味がある","自社との協業を相談したい","まず話を聞いてみたい"].map((t) => (
+                <li key={t} className="flex items-start gap-2"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500" />{t}</li>
+              ))}
+            </ul>
+            <div className="mt-7">
+              <Link href={connectHref} className="inline-flex items-center gap-2 rounded-full brand-gradient px-7 py-3.5 text-sm font-bold text-white shadow-md transition-transform hover:scale-[1.03]">
+                この企業とつながる →
+              </Link>
+              <p className="mt-2 text-xs text-slate-400">約1分で完了｜編集部より折り返しご連絡します</p>
+            </div>
+          </div>
+        </div>
       </article>
 
       {/* 関連記事 */}

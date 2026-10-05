@@ -20,7 +20,8 @@ export default function Inquiry({ searchParams }:{ searchParams:{e?:string} }) {
             <div><label className={lb}>ご連絡先（メール/電話） *</label><input name="contact" required className={inp} /></div>
           </div>
           <div><label className={lb}>ご相談内容</label><textarea name="message" rows={4} placeholder="取材・掲載してほしい内容、地域、想いなど" className={inp} /></div>
-          <button className="w-full rounded-lg brand-gradient px-4 py-3 text-sm font-semibold text-white">送信する</button>
+          <button className="w-full rounded-lg brand-gradient px-4 py-3 text-sm font-bold text-white">無料取材を申し込む</button>
+          <p className="text-center text-xs text-slate-400">約1分で完了｜担当者よりご連絡します</p>
         </form>
       </div>
     </main>

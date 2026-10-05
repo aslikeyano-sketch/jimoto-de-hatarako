@@ -27,8 +27,15 @@ export default async function Inbox(){
               </div>
               <HandledToggle kind="inquiry" id={q.id} handled={q.handled} />
             </div>
+            {(q.entryType || q.companyTarget || q.interviewSlug) && (
+              <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
+                {q.entryType && <span className="rounded-full bg-sky2-100 px-2 py-0.5 font-semibold text-navy-700">{q.entryType}</span>}
+                {q.companyTarget && <span className="font-semibold text-slate-700">対象：{q.companyTarget}</span>}
+                {q.interviewSlug && <a href={`/interviews/${q.interviewSlug}`} target="_blank" rel="noopener noreferrer" className="text-brand-600 underline">記事：{q.articleTitle || q.interviewSlug}</a>}
+              </div>
+            )}
             {q.message && <p className="mt-2 whitespace-pre-wrap text-sm text-slate-600">{q.message}</p>}
-            <p className="mt-2 text-xs text-slate-400">{q.contact} ・ {fmtDate(q.createdAt)}</p>
+            <p className="mt-2 text-xs text-slate-400">{q.email || q.contact} ・ {fmtDate(q.createdAt)}{q.referrer ? ` ・ 流入:${q.referrer}` : ""}</p>
           </div>
         ))}
         {inqs.length===0 && <p className="text-sm text-slate-400">まだありません。</p>}

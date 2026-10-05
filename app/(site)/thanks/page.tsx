@@ -4,6 +4,7 @@ const MSG:Record<string,string> = {
   register:"ご登録ありがとうございます。あなたの地元の情報をご案内していきます。",
   inquiry:"お問い合わせありがとうございます。担当より折り返しご連絡します。",
   submit:"情報のご提供ありがとうございます。内容を確認のうえ掲載を検討します。",
+  connect:"ありがとうございます。いただいた内容を編集部が確認し、企業との橋渡しをいたします。折り返しご連絡しますので、少々お待ちください。",
 };
 export default function Thanks({ searchParams }:{ searchParams:{t?:string} }) {
   const msg = MSG[searchParams.t ?? ""] ?? "送信が完了しました。";

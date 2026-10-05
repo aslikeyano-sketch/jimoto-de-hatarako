@@ -199,7 +199,16 @@ model Inquiry {
   name       String                          // 会社/団体/氏名
   prefecture String   @default("")
   contact    String   @default("")          // メール/電話
+  email      String   @default("")          // §9 メールアドレス（企業つながり導線）
   message    String   @default("")
+  // §8/§9/§28 記事経由の「この企業とつながる」CRM項目
+  entryType     String @default("")          // 転職/副業/協業/商品・サービス/イベント/その他
+  interviewSlug String @default("")          // 問い合わせ元の記事slug
+  companyTarget String @default("")          // 問い合わせ対象の企業・団体名
+  articleTitle  String @default("")          // 問い合わせ元の記事タイトル
+  referrer      String @default("")          // 流入元
+  utm           String @default("")          // UTMパラメータ（JSON文字列）
+  status        String @default("new")       // new/対応中/完了
   handled    Boolean  @default(false)
   createdAt  DateTime @default(now())
 }
@@ -241,6 +250,9 @@ model Interview {
   compUrl        String @default("")
   compSns        String @default("")
   compRecruit    String @default("")
+  compInstagram  String @default("")               // §13 Instagram
+  compX          String @default("")               // §13 X（旧Twitter）
+  metWanted      String @default("")               // §7/§13 この企業が今、出会いたい人（改行区切り）
   // 掲載フラグ（仕様§15）
   topPick     Boolean @default(false)           // TOPページ掲載
   recommend   Boolean @default(false)           // おすすめ
