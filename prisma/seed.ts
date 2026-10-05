@@ -398,7 +398,7 @@ AIは、めちゃくちゃ使っています（笑）。本当にフル活用で
       city: "別府市",
       companyName: "SEKIYA.so",
       companySlug: "",
-      personName: "寺本",
+      personName: "寺本 聖",
       personRole: "大分市若手起業家育成施設「Mirattend」のメンター",
       category: "若者・学生",
       tags: "大分県,別府市,若者,学生,起業,コミュニティ,シェアハウス,地方創生,インターン,AI",
