@@ -17,7 +17,7 @@ export function SiteFooter() {
             <li><Link href="/prefectures" className="hover:text-white">地域から探す（日本地図）</Link></li>
             <li><Link href="/interviews" className="hover:text-white">インタビュー</Link></li>
             <li><Link href="/features" className="hover:text-white">特集</Link></li>
-            <li><a href="https://chiho-sosei-site.vercel.app/cases" target="_blank" rel="noopener noreferrer" className="hover:text-white">県人会</a></li>
+            <li><a href="https://chiho-sosei-site.vercel.app/kenjinkai" target="_blank" rel="noopener noreferrer" className="hover:text-white">県人会</a></li>
             <li><Link href="/search" className="hover:text-white">検索</Link></li>
           </ul>
         </div>
