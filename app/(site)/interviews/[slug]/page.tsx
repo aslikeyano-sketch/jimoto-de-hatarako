@@ -44,10 +44,8 @@ export default async function InterviewDetail({ params }: { params: { slug: stri
   if (!iv) notFound();
   const pref = prefBySlug(iv.prefecture);
   const tags = (iv.tags ?? "").split(",").map((t) => t.trim()).filter(Boolean);
-  const [samePref, sameCat] = await Promise.all([
-    prisma.interview.findMany({ where: { prefecture: iv.prefecture, status: "published", NOT: { id: iv.id } }, orderBy: { publishedAt: "desc" }, take: 3 }),
-    prisma.interview.findMany({ where: { category: iv.category, status: "published", NOT: { id: iv.id } }, orderBy: { publishedAt: "desc" }, take: 3 }),
-  ]);
+  // 同じ県の記事は非表示。関連は同じカテゴリーのみ。
+  const sameCat = await prisma.interview.findMany({ where: { category: iv.category, status: "published", NOT: { id: iv.id } }, orderBy: { publishedAt: "desc" }, take: 3 });
 
   const comp = [
     ["代表者", iv.compRepresentative], ["所在地", iv.compAddress], ["設立", iv.compFounded],
@@ -87,14 +85,24 @@ export default async function InterviewDetail({ params }: { params: { slug: stri
 
       {/* メイン画像 */}
       <div className="mx-auto max-w-3xl px-5">
-        <div className="-mt-2 mb-8 overflow-hidden rounded-2xl">
-          {iv.mainImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={iv.mainImage} alt={iv.title} className="aspect-[16/9] w-full object-cover" />
+        {iv.mainImage ? (
+          iv.mainImageMode === "portrait" ? (
+            // 縦長写真：半分幅・全体表示（見切れさせない）
+            <div className="-mt-2 mb-8 overflow-hidden rounded-2xl mx-auto max-w-sm">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={iv.mainImage} alt={iv.title} className="w-full object-contain" />
+            </div>
           ) : (
+            <div className="-mt-2 mb-8 overflow-hidden rounded-2xl">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={iv.mainImage} alt={iv.title} className="aspect-[16/9] w-full object-cover" />
+            </div>
+          )
+        ) : (
+          <div className="-mt-2 mb-8 overflow-hidden rounded-2xl">
             <div className="flex aspect-[16/9] items-center justify-center bg-gradient-to-br from-brand-100 to-sky2-100"><span className="text-6xl opacity-70">🎤</span></div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       {/* 本文 */}
@@ -172,16 +180,10 @@ export default async function InterviewDetail({ params }: { params: { slug: stri
         </div>
       </article>
 
-      {/* 関連記事 */}
-      {(samePref.length > 0 || sameCat.length > 0) && (
+      {/* 関連記事（同じカテゴリーのみ） */}
+      {sameCat.length > 0 && (
         <section className="bg-slate-50/70 py-12">
           <div className="mx-auto max-w-[1440px] px-5">
-            {samePref.length > 0 && (
-              <>
-                <h2 className="mb-5 text-xl font-bold text-navy-900">同じ{pref?.name ?? "地域"}の記事</h2>
-                <div className="mb-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{samePref.map((r) => <InterviewCard key={r.id} iv={r} />)}</div>
-              </>
-            )}
             {sameCat.length > 0 && (
               <>
                 <h2 className="mb-5 text-xl font-bold text-navy-900">同じカテゴリーの記事</h2>

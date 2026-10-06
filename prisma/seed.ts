@@ -622,6 +622,7 @@ SEKIYA.soが若者の最初の一歩を支え、地元企業がリアルなテ�
       title: "宮崎から東京へ。人脈ゼロから、年商10億円規模へ。",
       subtitle: "「つながり」で描く未来。決裁者同士をつなぐ営業支援「SCORE X」取締役・京久保尚希さん。",
       mainImage: "/images/interviews/kyokubo-1.jpg",
+      mainImageMode: "portrait",
       bodyAbout:
 `宮崎から、スーツケースひとつで東京へ。人脈は、ほぼゼロ。それでも人と会い続け、つながりをつくり続けた。
 
@@ -653,7 +654,7 @@ SEKIYA.soが若者の最初の一歩を支え、地元企業がリアルなテ�
 
 京久保氏が経営や組織づくりで大切にしているのが、「愛・尊敬・感謝」という3つの言葉だ。特に意識しているのは、遠くにいる誰かではなく、まず一番身近な人に伝えること。「仲間が心の底から『この会社を伸ばしたい』と思わないと、会社は大きくならないと思っています。一人だけのマンパワーには限界がありますから」
 
-<div class="photo-row"><figure><img src="/images/interviews/kyokubo-2.jpg" alt="京久保さんとSCORE Xのメンバー" /><figcaption>「既存の仲間たちとともに、大きくしていく」。</figcaption></figure><figure><img src="/images/interviews/kyokubo-3.jpg" alt="メディアに出演する京久保さん" /><figcaption>「30代で世界挑戦、40代で世界貢献」。発信にも挑戦する。</figcaption></figure></div>`,
+<figure class="fig-2x"><img src="/images/interviews/kyokubo-2.jpg" alt="京久保さんとSCORE Xのメンバー" /><figcaption>「既存の仲間たちとともに、大きくしていく」。</figcaption></figure>`,
       bodyWhyLocal:
 `京久保氏自身が、宮崎から東京へ出てきた。だからこそ、地方にいる人や企業に伝えたいことがある。
 
@@ -669,7 +670,9 @@ SEKIYA.soが若者の最初の一歩を支え、地元企業がリアルなテ�
 
 次は47都道府県。そして、その先は世界へ。京久保尚希氏の挑戦は、まだ始まったばかりだ。`,
       bodyConnect:
-`京久保さんは、地方企業と東京をつなぐ接点を広げています。
+`<figure><img src="/images/interviews/kyokubo-3.jpg" alt="メディアに出演する京久保さん" /><figcaption>「30代で世界挑戦、40代で世界貢献」。発信にも挑戦する。</figcaption></figure>
+
+京久保さんは、地方企業と東京をつなぐ接点を広げています。
 
 - 東京に販路を広げたい・新規開拓をしたい
 - 経営者・決裁者とつながりたい

@@ -231,6 +231,7 @@ model Interview {
   title       String
   subtitle    String  @default("")
   mainImage   String  @default("")
+  mainImageMode String @default("")              // ""=16:9クロップ / "portrait"=縦長を半分幅・全体表示
   subImages   String  @default("")               // カンマ区切り
   // 本文セクション（仕様§13）
   bodyAbout      String @default("")             // この会社について
