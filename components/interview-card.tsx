@@ -28,12 +28,12 @@ export function InterviewCard({ iv, compact = false }: { iv: IV; compact?: boole
   return (
     <Link
       href={`/interviews/${iv.slug}`}
-      className={`group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card transition-all hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-lg ${compact ? "min-w-[260px]" : ""}`}
+      className={`group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card transition-all hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-lg ${compact ? "min-w-[260px]" : ""}`}
     >
       <div className="relative aspect-[16/10] overflow-hidden">
         {iv.mainImage ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={iv.mainImage} alt={iv.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+          <img src={iv.mainImage} alt={iv.title} className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105" />
         ) : (
           <div className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${v.grad}`}>
             <span className="text-5xl opacity-80">{v.emoji}</span>
@@ -46,7 +46,7 @@ export function InterviewCard({ iv, compact = false }: { iv: IV; compact?: boole
         )}
       </div>
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="line-clamp-2 text-[15px] font-bold leading-snug text-navy-900 group-hover:text-brand-700">{iv.title}</h3>
+        <h3 className="text-[15px] font-bold leading-snug text-navy-900 group-hover:text-brand-700">{iv.title}</h3>
         {(iv.companyName || iv.personName) && (
           <p className="mt-2 text-xs text-slate-500">
             {iv.companyName}
